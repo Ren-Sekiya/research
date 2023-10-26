@@ -49,17 +49,33 @@ comp = compstmt*
 
 compstmt
 	= includestmt
-    //definestmt*
+    /definestmt
     /mainfunction
     /functionstmt
     
     
 includestmt = _ "#include" _ "<" word:$(word SourceCharacter word) ">" _{
        return {
-       			"type":"Includestmt"
+       			"type":"Include"
        }
      }
-
+     
+definestmt =  _ "#define" _ word:$word _ "(" iden:iden ")" _ stmt:stmt _{
+       return {
+                "type":"define",
+                "funcname":word,
+                "argument":iden,
+                stmt
+              }
+       }
+       / _ "#define" _ iden:iden _ Parameter:Parameter word? _{
+       return {
+                "type":"define",
+                "name":iden,
+                Parameter,
+              }
+       }
+       
 mainfunction = _ "int main(void)" block:block _{
        return {
                  "type":"mainfunction",
@@ -69,7 +85,7 @@ mainfunction = _ "int main(void)" block:block _{
 
 functionstmt = multistmt
 
-multistmt = stmt [";"]?//*
+multistmt = stmt [";"]?
 
 stmt = function
     /returnstmt
@@ -436,7 +452,7 @@ ChangeExpression
 
 NumericLiteral
  = float:$(float) {
-    return {"type":"Literal", value: parseFloat(float), class: "Number"}
+    return {"type":"Literal", value: parseFloat(float) , class: "Number"}
   }
   /hexint:$(hexint) {
     return { "type": "Literal", value: hexint, class: "Number" }
