@@ -1,1 +1,207 @@
+//if-else if-elseの解析
 
+if(a < 5) {
+   printf("if");
+}else if(a < 10) {
+   printf("else if");
+} else {
+   printf("else");
+}
+
+//if-else if-elseの解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "ifStatement",
+            "funcname": "if",
+            "condition": {
+               "type": "BinaryExpression",
+               "operator": "<",
+               "left": {
+                  "type": "Identifier",
+                  "name": "a"
+               },
+               "right": {
+                  "type": "Literal",
+                  "value": 5,
+                  "class": "Number"
+               }
+            },
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "if",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ],
+      [
+         {
+            "type": "else ifStatement",
+            "funcname": "else if",
+            "condition": {
+               "type": "BinaryExpression",
+               "operator": "<",
+               "left": {
+                  "type": "Identifier",
+                  "name": "a"
+               },
+               "right": {
+                  "type": "Literal",
+                  "value": 10,
+                  "class": "Number"
+               }
+            },
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "else if",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ],
+      [
+         {
+            "type": "elseStatement",
+            "funcname": "else",
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "else",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ]
+   ]
+}
+
+//while文の解析
+while (i < 2){
+  printf("こんにちは\n");
+  i++;
+}
+
+//while文の解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "whileStatement",
+            "funcname": "while",
+            "condition": {
+               "type": "BinaryExpression",
+               "operator": "<",
+               "left": {
+                  "type": "Identifier",
+                  "name": "i"
+               },
+               "right": {
+                  "type": "Literal",
+                  "value": 2,
+                  "class": "Number"
+               }
+            },
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "こんにちは\n",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ],
+                  [
+                     {
+                        "type": "ExpressionStatement",
+                        "expression": {
+                           "type": "ChangeExpression",
+                           "Operator": "++",
+                           "left": {
+                              "type": "Identifier",
+                              "name": "i"
+                           },
+                           "right": 1
+                        }
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ]
+   ]
+}
