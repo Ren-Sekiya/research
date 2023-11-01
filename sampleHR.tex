@@ -1,3 +1,118 @@
+//includeの解析
+#include<stdio.h>
+#include<stdlib.h>
+
+//includeの解析結果
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      {
+         "type": "Include",
+         "standardheader": "stdlib.h"
+      }
+   ]
+}
+
+//defineの解析
+#define PI 3.14
+#define area(r) (PI*r*r)
+#define prt(f) printf("%f\n", f)
+
+//defineの解析の結果
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "define",
+         "name": {
+            "type": "Identifier",
+            "name": "PI"
+         },
+         "Parameter": [
+            null,
+            {
+               "type": "Literal",
+               "value": 3.14,
+               "class": "Number"
+            }
+         ]
+      },
+      {
+         "type": "define",
+         "funcname": "area",
+         "argument": {
+            "type": "Identifier",
+            "name": "r"
+         },
+         "stmt": {
+            "type": "ExpressionStatement",
+            "expression": {
+               "type": "BinaryExpression",
+               "operator": "*",
+               "left": {
+                  "type": "BinaryExpression",
+                  "operator": "*",
+                  "left": {
+                     "type": "Identifier",
+                     "name": "PI"
+                  },
+                  "right": {
+                     "type": "Identifier",
+                     "name": "r"
+                  }
+               },
+               "right": {
+                  "type": "Identifier",
+                  "name": "r"
+               }
+            }
+         }
+      },
+      {
+         "type": "define",
+         "funcname": "prt",
+         "argument": {
+            "type": "Identifier",
+            "name": "f"
+         },
+         "stmt": {
+            "type": "function",
+            "name": "printf",
+            "parameter": [
+               [],
+               [
+                  null,
+                  {
+                     "type": "Literal",
+                     "value": "%f\n",
+                     "class": "String"
+                  }
+               ],
+               [
+                  [
+                     ",",
+                     [
+                        " "
+                     ],
+                     [
+                        null,
+                        {
+                           "type": "Identifier",
+                           "name": "f"
+                        }
+                     ]
+                  ]
+               ]
+            ]
+         }
+      }
+   ]
+}
+
 //if-else if-elseの解析
 
 if(a < 5) {
