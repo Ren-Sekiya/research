@@ -57,3 +57,81 @@ do{
       ]
    ]
 }
+
+//for文
+for(int a;a < 5;a++){
+    printf("Hello World");
+}
+
+//解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "ForStatement",
+            "funcname": "for",
+            "InitializeStatement": {
+               "type": "variable",
+               "model": "int",
+               "value": [
+                  {
+                     "type": "Identifier",
+                     "name": "a"
+                  },
+                  []
+               ]
+            },
+            "condition": {
+               "type": "BinaryExpression",
+               "operator": "<",
+               "left": {
+                  "type": "Identifier",
+                  "name": "a"
+               },
+               "right": {
+                  "type": "Literal",
+                  "value": 5,
+                  "class": "Number"
+               }
+            },
+            "ChangeExpression": [
+               {
+                  "type": "ChangeExpression",
+                  "Operator": "++",
+                  "left": {
+                     "type": "Identifier",
+                     "name": "a"
+                  },
+                  "right": 1
+               }
+            ],
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "Hello World",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ]
+   ]
+}
