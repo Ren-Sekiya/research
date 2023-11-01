@@ -1,3 +1,11 @@
+do
+for
+main
+int
+char
+float
+double
+
 //do-while文
 do{
     printf("Hello World");
