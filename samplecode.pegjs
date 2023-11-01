@@ -10,7 +10,7 @@ if
 struct
 include
 return
-=
+//代入の解説
 
 
 //do-while文
