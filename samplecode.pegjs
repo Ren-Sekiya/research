@@ -9,6 +9,7 @@ while
 if
 struct
 include
+define
 return
 
 
@@ -69,90 +70,6 @@ do{
             }
          },
          ";"
-      ]
-   ]
-}
-
-//for文
-for(int a = 0;a < 5;a++){
-    printf("Hello World");
-}
-
-//解析結果
-{
-   "type": "Program",
-   "body": [
-      [
-         {
-            "type": "ForStatement",
-            "funcname": "for",
-            "InitializeStatement": {
-               "type": "variable",
-               "model": "int",
-               "expr": {
-                  "type": "AssignmentExpression",
-                  "operator": "=",
-                  "left": {
-                     "type": "Identifier",
-                     "name": "a"
-                  },
-                  "right": {
-                     "type": "Literal",
-                     "value": 0,
-                     "class": "Number"
-                  }
-               }
-            },
-            "condition": {
-               "type": "BinaryExpression",
-               "operator": "<",
-               "left": {
-                  "type": "Identifier",
-                  "name": "a"
-               },
-               "right": {
-                  "type": "Literal",
-                  "value": 5,
-                  "class": "Number"
-               }
-            },
-            "ChangeExpression": [
-               {
-                  "type": "ChangeExpression",
-                  "Operator": "++",
-                  "left": {
-                     "type": "Identifier",
-                     "name": "a"
-                  },
-                  "right": 1
-               }
-            ],
-            "block": {
-               "type": "block",
-               "multistmt": [
-                  [
-                     {
-                        "type": "function",
-                        "name": "printf",
-                        "parameter": [
-                           [],
-                           [
-                              null,
-                              {
-                                 "type": "Literal",
-                                 "value": "Hello World",
-                                 "class": "String"
-                              }
-                           ],
-                           []
-                        ]
-                     },
-                     ";"
-                  ]
-               ]
-            }
-         },
-         null
       ]
    ]
 }
