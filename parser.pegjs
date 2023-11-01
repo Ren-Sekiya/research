@@ -56,7 +56,8 @@ compstmt
     
 includestmt = _ "#include" _ "<" word:$(word SourceCharacter word) ">" _{
        return {
-       			"type":"Include"
+       			"type":"Include",
+                "standardheader":word
        }
      }
      
@@ -87,13 +88,13 @@ functionstmt = multistmt
 
 multistmt = stmt [";"]?
 
-stmt = function
-    /returnstmt
+stmt = returnstmt
     /expr
     /ifstmt
     /whilestmt
     /dostmt
     /forstmt
+    /function
     /vardeclarestmt
     /calcstmt
 
@@ -315,10 +316,13 @@ forstmt = _ name:"for" "(" InitializeStatement:stmt? ";" condition:(condition)? 
           }
 
 expr
-	= _ left:to _"="_ right:(from) _{
+	= _ left:to _"="_ !ReservedWord right:function _{
 		return sallow( left, right );
 	}
-    /_ left:("*"* "("?from")"?) _"="_ right:("&"? "*"*from) _{
+    /_ left:to _"="_ right:(from) _{
+		return sallow( left, right );
+	}
+    /_ left:( "("?from")"?) _"="_ right:("&"? from) _{
 		return sallow( left, right );
 	}
     /_ left:$(to "[" from "]") _"="_ right:from _{
