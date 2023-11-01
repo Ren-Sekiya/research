@@ -51,7 +51,289 @@ do{
                      "class": "Number"
                   }
                }
+            }//do-while文
+do{
+    printf("Hello World");
+}while(a < 5);
+
+//解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "doStatement",
+            "funcname": "do",
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "Hello World",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            },
+            "whilestmt": {
+               "type": "whileStatement",
+               "funcname": "while",
+               "condition": {
+                  "type": "BinaryExpression",
+                  "operator": "<",
+                  "left": {
+                     "type": "Identifier",
+                     "name": "a"
+                  },
+                  "right": {
+                     "type": "Literal",
+                     "value": 5,
+                     "class": "Number"
+                  }
+               }
             }
+         },
+         ";"
+      ]
+   ]
+}
+
+//for文
+for(int a = 0;a < 5;a++){
+    printf("Hello World");
+}
+
+//解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "ForStatement",
+            "funcname": "for",
+            "InitializeStatement": {
+               "type": "variable",
+               "model": "int",
+               "expr": {
+                  "type": "AssignmentExpression",
+                  "operator": "=",
+                  "left": {
+                     "type": "Identifier",
+                     "name": "a"
+                  },
+                  "right": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               }
+            },
+            "condition": {
+               "type": "BinaryExpression",
+               "operator": "<",
+               "left": {
+                  "type": "Identifier",
+                  "name": "a"
+               },
+               "right": {
+                  "type": "Literal",
+                  "value": 5,
+                  "class": "Number"
+               }
+            },
+            "ChangeExpression": [
+               {
+                  "type": "ChangeExpression",
+                  "Operator": "++",
+                  "left": {
+                     "type": "Identifier",
+                     "name": "a"
+                  },
+                  "right": 1
+               }
+            ],
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "Hello World",
+                                 "class": "String"
+                              }
+                           ],
+                           []
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ]
+   ]
+}
+
+//main関数と関数定義
+#include<stdio.h>
+
+void func(int age){
+    printf("私は%d歳です",age);
+}
+
+int main(void){
+    int age = 22;
+    func(age);
+    return 0;
+}
+
+//解析結果
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      [
+         {
+            "type": "function",
+            "return value": "void",
+            "name": "func",
+            "parameter": [
+               [],
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "age"
+                     },
+                     []
+                  ]
+               },
+               []
+            ],
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "私は%d歳です",
+                                 "class": "String"
+                              }
+                           ],
+                           [
+                              [
+                                 ",",
+                                 [],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Identifier",
+                                       "name": "age"
+                                    }
+                                 ]
+                              ]
+                           ]
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ],
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "variable",
+                     "model": "int",
+                     "expr": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                           "type": "Identifier",
+                           "name": "age"
+                        },
+                        "right": {
+                           "type": "Literal",
+                           "value": 22,
+                           "class": "Number"
+                        }
+                     }
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "function",
+                     "name": "func",
+                     "parameter": [
+                        [],
+                        [
+                           null,
+                           {
+                              "type": "Identifier",
+                              "name": "age"
+                           }
+                        ],
+                        []
+                     ]
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      }
+   ]
+}
          },
          ";"
       ]
