@@ -1,4 +1,4 @@
-do
+dodayo
 for
 main
 int
