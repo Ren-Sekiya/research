@@ -1,4 +1,4 @@
-do-whle
+do
 for
 main
 int
@@ -6,7 +6,7 @@ char
 float
 double
 while
-if
+else
 struct
 include
 define
