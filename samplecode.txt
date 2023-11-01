@@ -360,3 +360,81 @@ int main(void){
       }
    ]
 }
+
+//標準入出力
+
+scanf("%d", &a);
+printf("%d\n", a);
+
+//解析結果
+{
+   "type": "Program",
+   "body": [
+      [
+         {
+            "type": "function",
+            "name": "scanf",
+            "parameter": [
+               [],
+               [
+                  null,
+                  {
+                     "type": "Literal",
+                     "value": "%d",
+                     "class": "String"
+                  }
+               ],
+               [
+                  [
+                     ",",
+                     [
+                        " "
+                     ],
+                     [
+                        "&",
+                        {
+                           "type": "Identifier",
+                           "name": "a"
+                        }
+                     ]
+                  ]
+               ]
+            ]
+         },
+         ";"
+      ],
+      [
+         {
+            "type": "function",
+            "name": "printf",
+            "parameter": [
+               [],
+               [
+                  null,
+                  {
+                     "type": "Literal",
+                     "value": "%d\n",
+                     "class": "String"
+                  }
+               ],
+               [
+                  [
+                     ",",
+                     [
+                        " "
+                     ],
+                     [
+                        null,
+                        {
+                           "type": "Identifier",
+                           "name": "a"
+                        }
+                     ]
+                  ]
+               ]
+            ]
+         },
+         ";"
+      ]
+   ]
+}
