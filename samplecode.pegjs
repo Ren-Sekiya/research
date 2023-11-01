@@ -1,4 +1,4 @@
-dodayo
+do-whle
 for
 main
 int
