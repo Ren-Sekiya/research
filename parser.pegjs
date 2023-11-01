@@ -235,7 +235,7 @@ function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block
                         block
                      }
               }
-          / _ model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
+          / _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
               return {
               			"type":"function",
                         "name":name,
