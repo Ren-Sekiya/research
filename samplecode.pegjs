@@ -5,6 +5,7 @@ int
 char
 float
 double
+while
 
 //do-while文
 do{
