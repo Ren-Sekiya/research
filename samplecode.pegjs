@@ -1,4 +1,3 @@
-do
 for
 main
 int
