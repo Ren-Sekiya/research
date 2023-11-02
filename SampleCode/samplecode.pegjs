@@ -878,7 +878,7 @@ typedef struct person {
 } person2;
 
 int main(void) {
-  struct person1 tanaka;
+  struct person2 tanaka;
     tanaka.name = "T.Tanaka";
     tanaka.age = 30;
  
