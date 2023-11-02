@@ -1,0 +1,53 @@
+{
+    "type": "Program",
+    "body": [
+       [
+          {
+             "type": "doStatement",
+             "funcname": "do",
+             "block": {
+                "type": "block",
+                "multistmt": [
+                   [
+                      {
+                         "type": "function",
+                         "name": "printf",
+                         "parameter": [
+                            [],
+                            [
+                               null,
+                               {
+                                  "type": "Literal",
+                                  "value": "Hello World",
+                                  "class": "String"
+                               }
+                            ],
+                            []
+                         ]
+                      },
+                      ";"
+                   ]
+                ]
+             },
+             "whilestmt": {
+                "type": "whileStatement",
+                "funcname": "while",
+                "condition": {
+                   "type": "BinaryExpression",
+                   "operator": "<",
+                   "left": {
+                      "type": "Identifier",
+                      "name": "a"
+                   },
+                   "right": {
+                      "type": "Literal",
+                      "value": 5,
+                      "class": "Number"
+                   }
+                }
+             }
+          },
+          ";"
+       ]
+    ]
+ }
