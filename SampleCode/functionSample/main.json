@@ -1,0 +1,124 @@
+
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      [
+         {
+            "type": "function",
+            "return value": "void",
+            "name": "func",
+            "parameter": [
+               [],
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "age"
+                     },
+                     []
+                  ]
+               },
+               []
+            ],
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "私は%d歳です",
+                                 "class": "String"
+                              }
+                           ],
+                           [
+                              [
+                                 ",",
+                                 [],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Identifier",
+                                       "name": "age"
+                                    }
+                                 ]
+                              ]
+                           ]
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            }
+         },
+         null
+      ],
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "variable",
+                     "model": "int",
+                     "expr": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                           "type": "Identifier",
+                           "name": "age"
+                        },
+                        "right": {
+                           "type": "Literal",
+                           "value": 22,
+                           "class": "Number"
+                        }
+                     }
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "function",
+                     "name": "func",
+                     "parameter": [
+                        [],
+                        [
+                           null,
+                           {
+                              "type": "Identifier",
+                              "name": "age"
+                           }
+                        ],
+                        []
+                     ]
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      },
