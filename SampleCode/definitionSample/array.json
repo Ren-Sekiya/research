@@ -1,0 +1,166 @@
+
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "array",
+                     "model": "int",
+                     "value": {
+                        "type": "Identifier",
+                        "name": "array"
+                     },
+                     "length": {
+                        "type": "Literal",
+                        "value": 3,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "array",
+                     "model": "int",
+                     "length": {
+                        "type": "Literal",
+                        "value": 2,
+                        "class": "Number"
+                     },
+                     "left": {
+                        "type": "Identifier",
+                        "name": "array2"
+                     },
+                     "right": [
+                        [],
+                        [
+                           null,
+                           {
+                              "type": "Literal",
+                              "value": 1,
+                              "class": "Number"
+                           }
+                        ],
+                        [
+                           [
+                              ",",
+                              [],
+                              [
+                                 null,
+                                 {
+                                    "type": "Literal",
+                                    "value": 2,
+                                    "class": "Number"
+                                 }
+                              ]
+                           ]
+                        ]
+                     ]
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "array",
+                     "model": "int",
+                     "row": {
+                        "type": "Literal",
+                        "value": 2,
+                        "class": "Number"
+                     },
+                     "column": {
+                        "type": "Literal",
+                        "value": 2,
+                        "class": "Number"
+                     },
+                     "left": {
+                        "type": "Identifier",
+                        "name": "array2d"
+                     },
+                     "right": [
+                        "{",
+                        [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": 1,
+                                 "class": "Number"
+                              }
+                           ],
+                           [
+                              [
+                                 ",",
+                                 [],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Literal",
+                                       "value": 2,
+                                       "class": "Number"
+                                    }
+                                 ]
+                              ]
+                           ]
+                        ],
+                        "}",
+                        [
+                           [
+                              ",",
+                              "{",
+                              [
+                                 [],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Literal",
+                                       "value": 3,
+                                       "class": "Number"
+                                    }
+                                 ],
+                                 [
+                                    [
+                                       ",",
+                                       [],
+                                       [
+                                          null,
+                                          {
+                                             "type": "Literal",
+                                             "value": 4,
+                                             "class": "Number"
+                                          }
+                                       ]
+                                    ]
+                                 ]
+                              ],
+                              "}"
+                           ]
+                        ]
+                     ]
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      },
