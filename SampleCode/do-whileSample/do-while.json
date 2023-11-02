@@ -1,53 +1,76 @@
+
 {
-    "type": "Program",
-    "body": [
-       [
-          {
-             "type": "doStatement",
-             "funcname": "do",
-             "block": {
-                "type": "block",
-                "multistmt": [
-                   [
-                      {
-                         "type": "function",
-                         "name": "printf",
-                         "parameter": [
-                            [],
-                            [
-                               null,
-                               {
-                                  "type": "Literal",
-                                  "value": "Hello World",
-                                  "class": "String"
-                               }
-                            ],
-                            []
-                         ]
-                      },
-                      ";"
-                   ]
-                ]
-             },
-             "whilestmt": {
-                "type": "whileStatement",
-                "funcname": "while",
-                "condition": {
-                   "type": "BinaryExpression",
-                   "operator": "<",
-                   "left": {
-                      "type": "Identifier",
-                      "name": "a"
-                   },
-                   "right": {
-                      "type": "Literal",
-                      "value": 5,
-                      "class": "Number"
-                   }
-                }
-             }
-          },
-          ";"
-       ]
-    ]
- }
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "doStatement",
+                     "funcname": "do",
+                     "block": {
+                        "type": "block",
+                        "multistmt": [
+                           [
+                              {
+                                 "type": "function",
+                                 "name": "printf",
+                                 "parameter": [
+                                    [],
+                                    [
+                                       null,
+                                       {
+                                          "type": "Literal",
+                                          "value": "Hello World",
+                                          "class": "String"
+                                       }
+                                    ],
+                                    []
+                                 ]
+                              },
+                              ";"
+                           ]
+                        ]
+                     },
+                     "whilestmt": {
+                        "type": "whileStatement",
+                        "funcname": "while",
+                        "condition": {
+                           "type": "BinaryExpression",
+                           "operator": "<",
+                           "left": {
+                              "type": "Identifier",
+                              "name": "a"
+                           },
+                           "right": {
+                              "type": "Literal",
+                              "value": 5,
+                              "class": "Number"
+                           }
+                        }
+                     }
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      },
+    }
