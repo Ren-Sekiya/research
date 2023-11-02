@@ -1,0 +1,86 @@
+Output
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "whileStatement",
+                     "funcname": "while",
+                     "condition": {
+                        "type": "BinaryExpression",
+                        "operator": "<",
+                        "left": {
+                           "type": "Identifier",
+                           "name": "i"
+                        },
+                        "right": {
+                           "type": "Literal",
+                           "value": 2,
+                           "class": "Number"
+                        }
+                     },
+                     "block": {
+                        "type": "block",
+                        "multistmt": [
+                           [
+                              {
+                                 "type": "function",
+                                 "name": "printf",
+                                 "parameter": [
+                                    [],
+                                    [
+                                       null,
+                                       {
+                                          "type": "Literal",
+                                          "value": "こんにちは\n",
+                                          "class": "String"
+                                       }
+                                    ],
+                                    []
+                                 ]
+                              },
+                              ";"
+                           ],
+                           [
+                              {
+                                 "type": "ExpressionStatement",
+                                 "expression": {
+                                    "type": "ChangeExpression",
+                                    "Operator": "++",
+                                    "left": {
+                                       "type": "Identifier",
+                                       "name": "i"
+                                    },
+                                    "right": 1
+                                 }
+                              },
+                              ";"
+                           ]
+                        ]
+                     }
+                  },
+                  null
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      },
