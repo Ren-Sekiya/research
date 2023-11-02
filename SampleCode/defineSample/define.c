@@ -1,3 +1,5 @@
+かなり怪しい
+
 #include <stdio.h>
  
 #define PI 3.14f
