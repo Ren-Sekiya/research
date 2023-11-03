@@ -1,0 +1,170 @@
+
+{
+   "type": "Program",
+   "body": [
+      {
+         "type": "Include",
+         "standardheader": "stdio.h"
+      },
+      {
+         "type": "define",
+         "name": {
+            "type": "Identifier",
+            "name": "PI"
+         },
+         "Parameter": [
+            null,
+            {
+               "type": "Literal",
+               "value": "3.14f",
+               "class": "Number"
+            }
+         ]
+      },
+      {
+         "type": "define",
+         "funcname": "calc",
+         "argument": {
+            "type": "Identifier",
+            "name": "r"
+         },
+         "stmt": {
+            "type": "doStatement",
+            "funcname": "do",
+            "block": {
+               "type": "block",
+               "multistmt": [
+                  [
+                     {
+                        "type": "variable",
+                        "model": "double",
+                        "expr": {
+                           "type": "AssignmentExpression",
+                           "operator": "=",
+                           "left": {
+                              "type": "Identifier",
+                              "name": "area"
+                           },
+                           "right": {
+                              "type": "BinaryExpression",
+                              "operator": "*",
+                              "left": {
+                                 "type": "BinaryExpression",
+                                 "operator": "*",
+                                 "left": {
+                                    "type": "Identifier",
+                                    "name": "PI"
+                                 },
+                                 "right": {
+                                    "type": "Identifier",
+                                    "name": "r"
+                                 }
+                              },
+                              "right": {
+                                 "type": "Identifier",
+                                 "name": "r"
+                              }
+                           }
+                        }
+                     },
+                     ";"
+                  ],
+                  [
+                     {
+                        "type": "function",
+                        "name": "printf",
+                        "parameter": [
+                           [],
+                           [
+                              null,
+                              {
+                                 "type": "Literal",
+                                 "value": "半径%fの円の面積は: %f\n",
+                                 "class": "String"
+                              }
+                           ],
+                           [
+                              [
+                                 ",",
+                                 [
+                                    " "
+                                 ],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Identifier",
+                                       "name": "r"
+                                    }
+                                 ]
+                              ],
+                              [
+                                 ",",
+                                 [
+                                    " "
+                                 ],
+                                 [
+                                    null,
+                                    {
+                                       "type": "Identifier",
+                                       "name": "area"
+                                    }
+                                 ]
+                              ]
+                           ]
+                        ]
+                     },
+                     ";"
+                  ]
+               ]
+            },
+            "whilestmt": {
+               "type": "whileStatement",
+               "funcname": "while",
+               "condition": {
+                  "type": "Literal",
+                  "value": 0,
+                  "class": "Number"
+               }
+            }
+         }
+      },
+      {
+         "type": "mainfunction",
+         "block": {
+            "type": "block",
+            "multistmt": [
+               [
+                  {
+                     "type": "function",
+                     "name": "calc",
+                     "parameter": [
+                        [],
+                        [
+                           null,
+                           {
+                              "type": "Literal",
+                              "value": "10.0f",
+                              "class": "Number"
+                           }
+                        ],
+                        []
+                     ]
+                  },
+                  ";"
+               ],
+               [
+                  {
+                     "type": "returnStatement",
+                     "value": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  },
+                  ";"
+               ]
+            ]
+         }
+      }
+   ]
+}
