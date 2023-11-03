@@ -69,7 +69,7 @@ definestmt =  _ "#define" _ word:$word _ "(" iden:iden ")" _ stmt:stmt _{
                 stmt
               }
        }
-       / _ "#define" _ iden:iden _ Parameter:Parameter word? _{
+       / _ "#define" _ iden:iden _ Parameter:Parameter _{
        return {
                 "type":"define",
                 "name":iden,
@@ -405,7 +405,7 @@ iden
        
        
 word
-     = word:[a-zA-Z][0-9a-zA-Z]*
+     = word:[a-zA-Z][0-9a-zA-Z_]*
      
 ReservedWord = Model
               /"typedef"
@@ -414,6 +414,7 @@ ReservedWord = Model
               /"do"
               /"while"
               /"for"
+              /"main"
 
 _ "whitespace"
   = [ \t\n\r]*
@@ -455,7 +456,10 @@ ChangeExpression
                     }
 
 NumericLiteral
- = float:$(float) {
+ = suffix:$(suffix) {
+    return { "type": "Literal", value: suffix, class: "Number" }
+  }
+  /float:$(float) {
     return {"type":"Literal", value: parseFloat(float) , class: "Number"}
   }
   /hexint:$(hexint) {
@@ -464,6 +468,7 @@ NumericLiteral
   /int:$(int) {
     return { "type": "Literal", value: parseInt(int), class: "Number" }
   }
+  
 
 StringLiteral
   = '"' chars:DoubleQuoteCharacter* '"' {
@@ -506,6 +511,8 @@ ReferenceOperator
   / "."
 
 float = int frac digits
+
+suffix = int frac digits word
 
 hexint
   = signe? "0x" hexdigits
