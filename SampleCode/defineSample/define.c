@@ -1,16 +1,10 @@
-かなり怪しい(10.0f)みたいのが書けない
-
 #include <stdio.h>
  
 #define PI 3.14f
-#define CIRCLE_RATIO "円周率"
+#define calc(r) do {double area = PI * r * r; printf("半径%fの円の面積は: %f\n", r, area); } while(0)
  
 int main(void) {
-    double area = PI * 10 * 10;
-    char *ptr = CIRCLE_RATIO;
-    
-    printf("%sは: %f\n", ptr, PI);
-    printf("半径10の円の面積は: %f\n", area);
+    calc(10.0f);
     
     return 0;
 }
