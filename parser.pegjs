@@ -229,7 +229,7 @@ vardeclarestmt = structmodifier
 
 function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block:block _{
               return {
-              			"type":"function",
+              			"type":"FunctionDefinition",
                         "return value":model,
                         "name":name,
                         "parameter":parameterlist,
@@ -238,7 +238,7 @@ function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block
               }
           / _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
               return {
-              			"type":"function",
+              			"type":"FunctionExecution",
                         "name":name,
                         "parameter":parameterlist
                      }
