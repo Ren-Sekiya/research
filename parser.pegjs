@@ -94,6 +94,7 @@ stmt = returnstmt
 variable = _ model:Model _  expr:expr _{ return {
 							"type" : "variable",
 							"model" : model,
+                            "value":expr.left,
                             expr
                             }
                        }
