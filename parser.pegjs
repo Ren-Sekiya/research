@@ -50,7 +50,6 @@ comp = compstmt*
 compstmt
 	= includestmt
     /definestmt
-    /mainfunction
     /functionstmt
     
     
@@ -77,12 +76,6 @@ definestmt =  _ "#define" _ word:$word _ "(" iden:iden ")" _ stmt:stmt _{
               }
        }
        
-mainfunction = _ "int main(void)" block:block _{
-       return {
-                 "type":"mainfunction",
-                 block
-              }
-       }
 
 functionstmt = multistmt
 
