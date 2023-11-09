@@ -243,6 +243,11 @@ Para = "{"? ParameterList "}" (","  "{"? ParameterList "}")*
 
 Parameter = vardeclarestmt
            /"&"?from
+           /"void"{
+               return {
+                         "Parameter":"void"
+               }
+           }
            
            
 
