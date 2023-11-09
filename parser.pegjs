@@ -91,7 +91,8 @@ stmt = returnstmt
     /vardeclarestmt
     /calcstmt
 
-variable = _ model:Model _  expr:expr _{ return {
+variable = 
+          _ model:Model _  expr:expr _{ return {
 							"type" : "variable",
 							"model" : model,
                             "value":expr.left,
@@ -155,7 +156,7 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
 
-arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_ "{" right:Para "}"? _{
+arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  right:Para _{
     return{
       "type": "array",
       "model":model,
@@ -165,7 +166,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
-  /_ model:Model _ left:to "[" int:(from)? "]" _"="_ "{" right:ParameterList "}" _{
+  /_ model:Model _ left:to "[" int:(from)? "]" _"="_ "{" right:ParameterList "}" {
     return{
       "type": "array",
       "model":model,
@@ -174,7 +175,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
-  /_ model:Model _ iden:iden "[" int:from? "]" _{
+  /_ model:Model _ iden:iden "[" int:from? "]" {
     return{
       "type": "array",
       "model":model,
@@ -186,6 +187,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
 pointmodifier = _ model:Model _ ["*"]+expr:expr _{ return {
 							"type" : "pointer",
 							"model" : model,
+                            "value":expr.left,
                             expr
                             }
                        }
@@ -238,17 +240,20 @@ function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block
                      }
               }
               
-ParameterList = _ Parameter (","_ Parameter)*
+ParameterList =  Parameter (","Parameter)+
+               / Parameter
 
-Para = "{"? ParameterList "}" (","  "{"? ParameterList "}")*
+Para = "{" ParameterList "}" (","  "{" ParameterList "}")+
 
 Parameter = vardeclarestmt
-           /"&"?from
+           /from
+           /"&"from
            /"void"{
                return {
                          "Parameter":"void"
                }
            }
+
            
            
 
@@ -331,10 +336,10 @@ expr
 	}
 
           
-block = _ "{" _ multistmt:(multistmt)* _ "}" _{ 
+block = _ "{" _ stmt:(multistmt)* _ "}" _{ 
 			return {
             			"type": "block",
-						multistmt
+						stmt
             }
            }
 
