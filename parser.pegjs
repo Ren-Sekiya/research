@@ -293,12 +293,11 @@ whilestmt
             }
           }
 
-dostmt = _ name:"do" block:block whilestmt:whilestmt _{
+dostmt = _ name:"do" block:block "while" "(" condition:condition ")" _{
                       return{
                              "type":name + "Statement",
-                             "funcname":name,
                              block,
-                             whilestmt
+                             condition
                              }
                       }
 
