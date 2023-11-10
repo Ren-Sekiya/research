@@ -79,7 +79,7 @@ definestmt =  _ "#define" _ word:$word _ "(" iden:iden ")" _ stmt:stmt _{
 
 functionstmt = multistmt
 
-multistmt = stmt [";"]?
+multistmt = stmt
 
 stmt = returnstmt
     /expr
@@ -90,6 +90,9 @@ stmt = returnstmt
     /function
     /vardeclarestmt
     /calcstmt
+    /EndSentence
+
+EndSentence = ";"
 
 variable = 
           _ model:Model _  expr:expr _{ return {
