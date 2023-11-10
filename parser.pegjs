@@ -102,13 +102,13 @@ variable =
                             expr
                             }
                        }
-          / _ model:Model _ iden:(iden (","_ variable)+) _{ return {
+          / _ model:Model _ iden:multideclare _{ return {
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
                        }
-          /_ model:Model _ iden:(iden (","_ $"*"*iden)*) _{ return {
+          /_ model:Model _ iden:iden _{ return {
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
@@ -187,26 +187,15 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
     }
   }
   
-pointmodifier = _ model:Model _ ["*"]+expr:expr _{ return {
+pointmodifier = _ model:Model"*" _ expr:expr _{ return {
 							"type" : "pointer",
 							"model" : model,
-                            "value":expr.left,
+                            "value" : expr.left,
                             expr
                             }
                        }
-                /_ model:Model["*"]+ _ expr:expr _{ return {
-							"type" : "pointer",
-							"model" : model,
-                            expr
-                            }
-                       }
-                /_ model:Model _ iden:("*"+iden ( _ "," _ "*"+iden)*) _{ return {
-							"type" : "pointer",
-							"model" : model,
-                            "value" : iden
-                            }
-                       }
-                /_ model:Model["*"]+ _ iden:iden _{ return {
+                
+                /_ model:Model"*" _ iden:iden _{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
@@ -255,7 +244,10 @@ Parameter = vardeclarestmt
            }
            /","
 
-           
+multideclare = multiple+
+
+multiple = iden
+           /","
            
 
 ifstmt
@@ -326,7 +318,7 @@ expr
     /_ left:to _"="_ right:(from) _{
 		return sallow( left, right );
 	}
-    /_ left:( "("?from")"?) _"="_ right:("&"? from) _{
+    /_ left:( "("from")") _"="_ right:(from) _{
 		return sallow( left, right );
 	}
     /_ left:$(to "[" from "]") _"="_ right:from _{
@@ -405,6 +397,9 @@ iden
        }
        /"*"word:$(word){
        return {"type":"Pointer", name:word}
+       }
+       /"&"word:$(word){
+       return {"type":"address", name:word}
        }
        
        
