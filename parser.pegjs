@@ -226,7 +226,7 @@ vardeclarestmt = structmodifier
     /variable
 
 
-function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block:block _{
+function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" block:block _{
               return {
               			"type":"FunctionDefinition",
                         "return value":model,
@@ -243,8 +243,8 @@ function = _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" block
                      }
               }
               
-ParameterList =  Parameter (","Parameter)+
-               / Parameter
+ParameterList =  Parameter*
+               
 
 Para = "{" ParameterList "}" (","  "{" ParameterList "}")+
 
@@ -256,6 +256,7 @@ Parameter = vardeclarestmt
                          "Parameter":"void"
                }
            }
+           /","
 
            
            
