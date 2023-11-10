@@ -159,7 +159,7 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
 
-arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  right:Para _{
+arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  right:ParameterList _{
     return{
       "type": "array",
       "model":model,
@@ -245,9 +245,6 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
               
 ParameterList =  Parameter*
                
-
-Para = "{" ParameterList "}" (","  "{" ParameterList "}")+
-
 Parameter = vardeclarestmt
            /from
            /"&"from
@@ -384,7 +381,7 @@ allow
     }
 
 Factor
-  = "{" _ compstmt:(from (","from)*) _ "}" { return compstmt; }
+  = "{" _ compstmt:ParameterList _ "}" { return compstmt; }
   /"(" _ expr:Expression _ ")" { return expr; }
   /NumericLiteral
   /StringLiteral
