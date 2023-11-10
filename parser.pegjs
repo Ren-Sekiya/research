@@ -231,6 +231,13 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
                         "parameter":parameterlist
                      }
               }
+          / _ model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
+              return {
+              			"type":"FunctionDefinition",
+                        "name":name,
+                        "parameter":parameterlist
+                     }
+              }
               
 ParameterList =  Parameter*
                
