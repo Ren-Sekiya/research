@@ -115,14 +115,13 @@ variable =
                             expr
                             }
                        }
-              / _ model:Model _ iden:iden _{ return {//int a,b,c
+              /_ model:Model _ iden:ParameterList _{ return {//int a
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
                        }
-           
-variable2= _ model:Model _ iden:ParameterList _{ return {//int a
+              / _ model:Model _ iden:iden _{ return {//int a,b,c
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
@@ -236,7 +235,6 @@ Model = "void"
 vardeclarestmt = structmodifier
     /arraymodifier
     /pointmodifier
-    /variable2
     /variable
 
 
@@ -256,13 +254,13 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
                         "parameter":parameterlist
                      }
               }
-          /*/ _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" _{
+          / _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" _{
               return {
               			"type":"FunctionDefinition",
                         "name":name,
                         "parameter":parameterlist
                      }
-              }*/
+              }
               
 start
   = elements:ParameterList { return filterCommas(elements); }
@@ -287,12 +285,36 @@ Parametervardeclarestmt =  _ model:Model _  expr:expr _{ return {//int a=10
                             expr
                             }
                        }
-              / _ model:Model _ iden:iden _{ return {//int a,b,c
+                /_ model:Model"*" _ iden:iden _{ return {
+							"type" : "pointer",
+							"model" : model,
+                            "value" : iden
+                            }
+                       }
+                /_ model:Model _ left:to "[" row:from? "]""[" column:from? "]" _{
+   						return{
+     						"type": "array",
+      						"model":model,
+      						"row": row,
+      						"column":column,
+      						"name":left
+    					}
+  				   }
+
+  				/_ model:Model _ iden:iden "[" int:from? "]" {
+    					return{
+      						"type": "array",
+      						"model":model,
+      						"value":iden,
+      						"length": int
+    					}
+  				   }
+                / _ model:Model _ iden:iden _{ return {//int a,b,c
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
-                       }       
+                       }
 
 multideclare = head:Parameter tail:("," Parameter)* {
                 return [head].concat(tail.map(item => item[1]));
