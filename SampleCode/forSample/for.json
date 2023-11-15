@@ -6,91 +6,83 @@
          "standardheader": "stdio.h"
       },
       {
-         "type": "mainfunction",
+         "type": "FunctionDefinition",
+         "return value": "int",
+         "name": "main",
+         "parameter": [
+            {
+               "Parameter": "void"
+            }
+         ],
          "block": {
             "type": "block",
-            "multistmt": [
-               [
-                  {
-                     "type": "ForStatement",
-                     "funcname": "for",
-                     "InitializeStatement": {
-                        "type": "variable",
-                        "model": "int",
-                        "value": [
-                           {
-                              "type": "Identifier",
-                              "name": "a"
-                           },
-                           []
-                        ]
+            "stmt": [
+               {
+                  "type": "ForStatement",
+                  "funcname": "for",
+                  "InitializeStatement": {
+                     "type": "variable",
+                     "model": "int",
+                     "value": [
+                        {
+                           "type": "Identifier",
+                           "name": "a"
+                        }
+                     ]
+                  },
+                  "condition": {
+                     "type": "BinaryExpression",
+                     "operator": "<",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "a"
                      },
-                     "condition": {
-                        "type": "BinaryExpression",
-                        "operator": "<",
+                     "right": {
+                        "type": "Literal",
+                        "value": 5,
+                        "class": "Number"
+                     }
+                  },
+                  "ChangeExpression": [
+                     {
+                        "type": "ChangeExpression",
+                        "Operator": "++",
                         "left": {
                            "type": "Identifier",
                            "name": "a"
                         },
-                        "right": {
-                           "type": "Literal",
-                           "value": 5,
-                           "class": "Number"
-                        }
-                     },
-                     "ChangeExpression": [
+                        "right": 1
+                     }
+                  ],
+                  "block": {
+                     "type": "block",
+                     "stmt": [
                         {
-                           "type": "ChangeExpression",
-                           "Operator": "++",
-                           "left": {
-                              "type": "Identifier",
-                              "name": "a"
-                           },
-                           "right": 1
-                        }
-                     ],
-                     "block": {
-                        "type": "block",
-                        "multistmt": [
-                           [
+                           "type": "FunctionExecution",
+                           "name": "printf",
+                           "parameter": [
                               {
-                                 "type": "function",
-                                 "name": "printf",
-                                 "parameter": [
-                                    [],
-                                    [
-                                       null,
-                                       {
-                                          "type": "Literal",
-                                          "value": "Hello World",
-                                          "class": "String"
-                                       }
-                                    ],
-                                    []
-                                 ]
-                              },
-                              ";"
+                                 "type": "Literal",
+                                 "value": "Hello World",
+                                 "class": "String"
+                              }
                            ]
-                        ]
-                     }
-                  },
-                  null
-               ],
-               [
-                  {
-                     "type": "returnStatement",
-                     "value": {
-                        "type": "Literal",
-                        "value": 0,
-                        "class": "Number"
-                     }
-                  },
-                  ";"
-               ]
+                        },
+                        ";"
+                     ]
+                  }
+               },
+               {
+                  "type": "returnStatement",
+                  "value": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               },
+               ";"
             ]
          }
       }
    ]
 }
-3
-Do

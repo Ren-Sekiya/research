@@ -6,154 +6,126 @@
          "standardheader": "stdio.h"
       },
       {
-         "type": "mainfunction",
+         "type": "FunctionDefinition",
+         "return value": "int",
+         "name": "main",
+         "parameter": [
+            {
+               "Parameter": "void"
+            }
+         ],
          "block": {
             "type": "block",
-            "multistmt": [
-               [
-                  {
-                     "type": "variable",
-                     "model": "int",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "a"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "ifStatement",
-                     "funcname": "if",
-                     "condition": {
-                        "type": "BinaryExpression",
-                        "operator": "<",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "a"
-                        },
-                        "right": {
-                           "type": "Literal",
-                           "value": 5,
-                           "class": "Number"
-                        }
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "a"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "ifStatement",
+                  "funcname": "if",
+                  "condition": {
+                     "type": "BinaryExpression",
+                     "operator": "<",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "a"
                      },
-                     "block": {
-                        "type": "block",
-                        "multistmt": [
-                           [
-                              {
-                                 "type": "function",
-                                 "name": "printf",
-                                 "parameter": [
-                                    [],
-                                    [
-                                       null,
-                                       {
-                                          "type": "Literal",
-                                          "value": "if",
-                                          "class": "String"
-                                       }
-                                    ],
-                                    []
-                                 ]
-                              },
-                              ";"
-                           ]
-                        ]
-                     }
-                  },
-                  null
-               ],
-               [
-                  {
-                     "type": "else ifStatement",
-                     "funcname": "else if",
-                     "condition": {
-                        "type": "BinaryExpression",
-                        "operator": "<",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "a"
-                        },
-                        "right": {
-                           "type": "Literal",
-                           "value": 10,
-                           "class": "Number"
-                        }
-                     },
-                     "block": {
-                        "type": "block",
-                        "multistmt": [
-                           [
-                              {
-                                 "type": "function",
-                                 "name": "printf",
-                                 "parameter": [
-                                    [],
-                                    [
-                                       null,
-                                       {
-                                          "type": "Literal",
-                                          "value": "else if",
-                                          "class": "String"
-                                       }
-                                    ],
-                                    []
-                                 ]
-                              },
-                              ";"
-                           ]
-                        ]
-                     }
-                  },
-                  null
-               ],
-               [
-                  {
-                     "type": "elseStatement",
-                     "funcname": "else",
-                     "block": {
-                        "type": "block",
-                        "multistmt": [
-                           [
-                              {
-                                 "type": "function",
-                                 "name": "printf",
-                                 "parameter": [
-                                    [],
-                                    [
-                                       null,
-                                       {
-                                          "type": "Literal",
-                                          "value": "else",
-                                          "class": "String"
-                                       }
-                                    ],
-                                    []
-                                 ]
-                              },
-                              ";"
-                           ]
-                        ]
-                     }
-                  },
-                  null
-               ],
-               [
-                  {
-                     "type": "returnStatement",
-                     "value": {
+                     "right": {
                         "type": "Literal",
-                        "value": 0,
+                        "value": 5,
                         "class": "Number"
                      }
                   },
-                  ";"
-               ]
+                  "block": {
+                     "type": "block",
+                     "stmt": [
+                        {
+                           "type": "FunctionExecution",
+                           "name": "printf",
+                           "parameter": [
+                              {
+                                 "type": "Literal",
+                                 "value": "if",
+                                 "class": "String"
+                              }
+                           ]
+                        },
+                        ";"
+                     ]
+                  }
+               },
+               {
+                  "type": "else ifStatement",
+                  "funcname": "else if",
+                  "condition": {
+                     "type": "BinaryExpression",
+                     "operator": "<",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "a"
+                     },
+                     "right": {
+                        "type": "Literal",
+                        "value": 10,
+                        "class": "Number"
+                     }
+                  },
+                  "block": {
+                     "type": "block",
+                     "stmt": [
+                        {
+                           "type": "FunctionExecution",
+                           "name": "printf",
+                           "parameter": [
+                              {
+                                 "type": "Literal",
+                                 "value": "else if",
+                                 "class": "String"
+                              }
+                           ]
+                        },
+                        ";"
+                     ]
+                  }
+               },
+               {
+                  "type": "elseStatement",
+                  "funcname": "else",
+                  "block": {
+                     "type": "block",
+                     "stmt": [
+                        {
+                           "type": "FunctionExecution",
+                           "name": "printf",
+                           "parameter": [
+                              {
+                                 "type": "Literal",
+                                 "value": "else",
+                                 "class": "String"
+                              }
+                           ]
+                        },
+                        ";"
+                     ]
+                  }
+               },
+               {
+                  "type": "returnStatement",
+                  "value": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               },
+               ";"
             ]
          }
       }

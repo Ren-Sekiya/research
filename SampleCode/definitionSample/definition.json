@@ -6,157 +6,159 @@
          "standardheader": "stdio.h"
       },
       {
-         "type": "mainfunction",
+         "type": "FunctionDefinition",
+         "return value": "int",
+         "name": "main",
+         "parameter": [
+            {
+               "Parameter": "void"
+            }
+         ],
          "block": {
             "type": "block",
-            "multistmt": [
-               [
-                  {
-                     "type": "variable",
-                     "model": "int",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "a"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "int",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "b"
-                        },
-                        "right": {
-                           "type": "Literal",
-                           "value": 0,
-                           "class": "Number"
-                        }
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "a"
                      }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "b"
                   },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "float",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "c"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "float",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "d"
-                        },
-                        "right": {
-                           "type": "Literal",
-                           "value": 0,
-                           "class": "Number"
-                        }
-                     }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "double",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "e"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "double",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "f"
-                        },
-                        "right": {
-                           "type": "Literal",
-                           "value": 0,
-                           "class": "Number"
-                        }
-                     }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "char",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "g"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "variable",
-                     "model": "char",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "h"
-                        },
-                        "right": {
-                           "type": "Character",
-                           "word": "a"
-                        }
-                     }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "returnStatement",
-                     "value": {
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "b"
+                     },
+                     "right": {
                         "type": "Literal",
                         "value": 0,
                         "class": "Number"
                      }
+                  }
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "float",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "c"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "float",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "d"
                   },
-                  ";"
-               ]
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "d"
+                     },
+                     "right": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  }
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "double",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "e"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "double",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "f"
+                  },
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "f"
+                     },
+                     "right": {
+                        "type": "Literal",
+                        "value": 0,
+                        "class": "Number"
+                     }
+                  }
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "char",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "g"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "char",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "h"
+                  },
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
+                        "type": "Identifier",
+                        "name": "h"
+                     },
+                     "right": {
+                        "type": "Character",
+                        "word": "a"
+                     }
+                  }
+               },
+               ";",
+               {
+                  "type": "returnStatement",
+                  "value": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               },
+               ";"
             ]
          }
       }
-     }
+   ]
+}

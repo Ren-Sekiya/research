@@ -5,173 +5,149 @@
          "type": "Include",
          "standardheader": "stdio.h"
       },
-      [
-         {
-            "type": "structure",
-            "model": "struct person1",
-            "block": {
-               "type": "block",
-               "multistmt": [
-                  [
-                     {
-                        "type": "pointer",
-                        "model": "char",
-                        "value": [
-                           [
-                              "*"
-                           ],
-                           {
-                              "type": "Identifier",
-                              "name": "name"
-                           },
-                           []
-                        ]
-                     },
-                     ";"
-                  ],
-                  [
-                     {
-                        "type": "variable",
-                        "model": "int",
-                        "value": [
-                           {
-                              "type": "Identifier",
-                              "name": "age"
-                           },
-                           []
-                        ]
-                     },
-                     ";"
-                  ]
-               ]
-            }
-         },
-         ";"
-      ],
-      [
-         {
-            "type": "structure",
-            "model": {
-               "type": "Identifier",
-               "name": "person2"
-            },
-            "block": {
-               "type": "block",
-               "multistmt": [
-                  [
-                     {
-                        "type": "pointer",
-                        "model": "char",
-                        "value": [
-                           [
-                              "*"
-                           ],
-                           {
-                              "type": "Identifier",
-                              "name": "name"
-                           },
-                           []
-                        ]
-                     },
-                     ";"
-                  ],
-                  [
-                     {
-                        "type": "variable",
-                        "model": "int",
-                        "value": [
-                           {
-                              "type": "Identifier",
-                              "name": "age"
-                           },
-                           []
-                        ]
-                     },
-                     ";"
-                  ]
-               ]
-            }
-         },
-         ";"
-      ],
       {
-         "type": "mainfunction",
+         "type": "structure",
+         "model": "struct person1",
          "block": {
             "type": "block",
-            "multistmt": [
-               [
-                  {
-                     "type": "variable",
-                     "model": "struct person2",
-                     "value": [
-                        {
-                           "type": "Identifier",
-                           "name": "tanaka"
-                        },
-                        []
-                     ]
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "AssignmentExpression",
-                     "operator": "=",
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "char",
+                  "value": [
+                     {
+                        "type": "Pointer",
+                        "name": "name"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "age"
+                     }
+                  ]
+               },
+               ";"
+            ]
+         }
+      },
+      ";",
+      {
+         "type": "structure",
+         "model": {
+            "type": "Identifier",
+            "name": "person2"
+         },
+         "block": {
+            "type": "block",
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "char",
+                  "value": [
+                     {
+                        "type": "Pointer",
+                        "name": "name"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "age"
+                     }
+                  ]
+               },
+               ";"
+            ]
+         }
+      },
+      ";",
+      {
+         "type": "FunctionDefinition",
+         "return value": "int",
+         "name": "main",
+         "parameter": [
+            {
+               "Parameter": "void"
+            }
+         ],
+         "block": {
+            "type": "block",
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "struct person2",
+                  "value": [
+                     {
+                        "type": "Identifier",
+                        "name": "tanaka"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "AssignmentExpression",
+                  "operator": "=",
+                  "left": {
+                     "type": "ReferenceExpression",
+                     "operator": ".",
                      "left": {
-                        "type": "ReferenceExpression",
-                        "operator": ".",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "tanaka"
-                        },
-                        "right": {
-                           "type": "Identifier",
-                           "name": "name"
-                        }
+                        "type": "Identifier",
+                        "name": "tanaka"
                      },
                      "right": {
-                        "type": "Literal",
-                        "value": "T.Tanaka",
-                        "class": "String"
+                        "type": "Identifier",
+                        "name": "name"
                      }
                   },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "AssignmentExpression",
-                     "operator": "=",
+                  "right": {
+                     "type": "Literal",
+                     "value": "T.Tanaka",
+                     "class": "String"
+                  }
+               },
+               ";",
+               {
+                  "type": "AssignmentExpression",
+                  "operator": "=",
+                  "left": {
+                     "type": "ReferenceExpression",
+                     "operator": ".",
                      "left": {
-                        "type": "ReferenceExpression",
-                        "operator": ".",
-                        "left": {
-                           "type": "Identifier",
-                           "name": "tanaka"
-                        },
-                        "right": {
-                           "type": "Identifier",
-                           "name": "age"
-                        }
+                        "type": "Identifier",
+                        "name": "tanaka"
                      },
                      "right": {
-                        "type": "Literal",
-                        "value": 30,
-                        "class": "Number"
+                        "type": "Identifier",
+                        "name": "age"
                      }
                   },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "returnStatement",
-                     "value": {
-                        "type": "Literal",
-                        "value": 0,
-                        "class": "Number"
-                     }
-                  },
-                  ";"
-               ]
+                  "right": {
+                     "type": "Literal",
+                     "value": 30,
+                     "class": "Number"
+                  }
+               },
+               ";",
+               {
+                  "type": "returnStatement",
+                  "value": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               },
+               ";"
             ]
          }
       }

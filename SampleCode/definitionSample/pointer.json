@@ -6,101 +6,90 @@
          "standardheader": "stdio.h"
       },
       {
-         "type": "mainfunction",
+         "type": "FunctionDefinition",
+         "return value": "int",
+         "name": "main",
+         "parameter": [
+            {
+               "Parameter": "void"
+            }
+         ],
          "block": {
             "type": "block",
-            "multistmt": [
-               [
-                  {
-                     "type": "pointer",
-                     "model": "int",
-                     "value": [
-                        [
-                           "*"
-                        ],
-                        {
-                           "type": "Identifier",
-                           "name": "pointer"
-                        },
-                        []
-                     ]
+            "stmt": [
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": [
+                     {
+                        "type": "Pointer",
+                        "name": "pointer"
+                     }
+                  ]
+               },
+               ";",
+               {
+                  "type": "pointer",
+                  "model": "int",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "pointer2"
+                  }
+               },
+               ";",
+               {
+                  "type": "variable",
+                  "model": "int",
+                  "value": {
+                     "type": "Pointer",
+                     "name": "pointer3"
                   },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "pointer",
-                     "model": "int",
-                     "value": {
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
+                        "type": "Pointer",
+                        "name": "pointer3"
+                     },
+                     "right": {
+                        "type": "address",
+                        "name": "a"
+                     }
+                  }
+               },
+               ";",
+               {
+                  "type": "pointer",
+                  "model": "int",
+                  "value": {
+                     "type": "Identifier",
+                     "name": "pointer4"
+                  },
+                  "expr": {
+                     "type": "AssignmentExpression",
+                     "operator": "=",
+                     "left": {
                         "type": "Identifier",
-                        "name": "pointer2"
+                        "name": "pointer4"
+                     },
+                     "right": {
+                        "type": "address",
+                        "name": "a"
                      }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "pointer",
-                     "model": "int",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": [
-                           null,
-                           {
-                              "type": "Identifier",
-                              "name": "pointer3"
-                           },
-                           null
-                        ],
-                        "right": [
-                           "&",
-                           {
-                              "type": "Identifier",
-                              "name": "a"
-                           }
-                        ]
-                     }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "pointer",
-                     "model": "int",
-                     "expr": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": [
-                           null,
-                           {
-                              "type": "Identifier",
-                              "name": "pointer4"
-                           },
-                           null
-                        ],
-                        "right": [
-                           "&",
-                           {
-                              "type": "Identifier",
-                              "name": "a"
-                           }
-                        ]
-                     }
-                  },
-                  ";"
-               ],
-               [
-                  {
-                     "type": "returnStatement",
-                     "value": {
-                        "type": "Literal",
-                        "value": 0,
-                        "class": "Number"
-                     }
-                  },
-                  ";"
-               ]
+                  }
+               },
+               ";",
+               {
+                  "type": "returnStatement",
+                  "value": {
+                     "type": "Literal",
+                     "value": 0,
+                     "class": "Number"
+                  }
+               },
+               ";"
             ]
          }
-      },
+      }
+   ]
+}
