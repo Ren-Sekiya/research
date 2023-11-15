@@ -36,7 +36,20 @@
       };
     },head);
   }
+  function param(head, tail) {
+    return tail.reduce(function(result, element) {
+      return {
+        result,
+        right:element[1]
+      };
+    },head);
+  }
+  function filterCommas(arr) {
+    return arr.filter(item => item !== ",");
+  }
 }
+
+
 program
 	= body: comp{
 		return{
@@ -95,26 +108,27 @@ stmt = returnstmt
 EndSentence = ";"
 
 variable = 
-          _ model:Model _  expr:expr _{ return {
+          _ model:Model _  expr:expr _{ return {//int a=10
 							"type" : "variable",
 							"model" : model,
                             "value":expr.left,
                             expr
                             }
                        }
-          / _ model:Model _ iden:multideclare _{ return {
+              / _ model:Model _ iden:iden _{ return {//int a,b,c
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
                        }
-          /_ model:Model _ iden:iden _{ return {
+           
+variable2= _ model:Model _ iden:ParameterList _{ return {//int a
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
                        }
-
+           
 structmodifier = _ model:$iden _ left:expr{
 						return {
                         		 "type":"variable",
@@ -178,6 +192,16 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
+  /_ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _{
+    return{
+      "type": "array",
+      "model":model,
+      "row": row,
+      "column":column,
+      "name":left
+    }
+  }
+
   /_ model:Model _ iden:iden "[" int:from? "]" {
     return{
       "type": "array",
@@ -212,6 +236,7 @@ Model = "void"
 vardeclarestmt = structmodifier
     /arraymodifier
     /pointmodifier
+    /variable2
     /variable
 
 
@@ -231,17 +256,22 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
                         "parameter":parameterlist
                      }
               }
-          / _ model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
+          /*/ _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" _{
               return {
               			"type":"FunctionDefinition",
                         "name":name,
                         "parameter":parameterlist
                      }
-              }
+              }*/
               
-ParameterList =  Parameter*
+start
+  = elements:ParameterList { return filterCommas(elements); }
+              
+ParameterList = head:Parameter tail:("," Parameter)* {
+                return [head].concat(tail.map(item => item[1]));
+                }
                
-Parameter = vardeclarestmt
+Parameter = Parametervardeclarestmt
            /from
            /"&"from
            /"void"{
@@ -249,14 +279,25 @@ Parameter = vardeclarestmt
                          "Parameter":"void"
                }
            }
-           /","
-
-multideclare = multiple+
-
-multiple = iden
-           /","
            
+Parametervardeclarestmt =  _ model:Model _  expr:expr _{ return {//int a=10
+							"type" : "variable",
+							"model" : model,
+                            "value":expr.left,
+                            expr
+                            }
+                       }
+              / _ model:Model _ iden:iden _{ return {//int a,b,c
+							"type" : "variable",
+							"model" : model,
+                            "value" : iden
+                            }
+                       }       
 
+multideclare = head:Parameter tail:("," Parameter)* {
+                return [head].concat(tail.map(item => item[1]));
+                }
+           
 ifstmt
 	 	= _ name:"if" "(" condition:condition ")" block:block _ {
         	return {
@@ -346,7 +387,7 @@ block = _ "{" _ stmt:(multistmt)* _ "}" _{
 calcstmt
 	= _ expression:from _{
 		return {
-			"type": "ExpressionStatement",
+			"type": "ExpressionStatement1",
             expression                                                                                                
 		}
       }
@@ -382,6 +423,7 @@ allow
 Factor
   = "{" _ compstmt:ParameterList _ "}" { return compstmt; }
   /"(" _ expr:Expression _ ")" { return expr; }
+  /arrayLiteral
   /NumericLiteral
   /StringLiteral
   /iden
@@ -424,9 +466,12 @@ ReservedWord = Model
 
 _ "whitespace"
   = [ \t\n\r]*
+  
+
 
 from
   = ChangeExpression
+  /syuutan
   /RelationExpression
   / value:NumericLiteral{
     return{
@@ -461,6 +506,25 @@ ChangeExpression
                            }
                     }
 
+syuutan = "'" "¥0" "'"
+
+arrayLiteral = _ left:iden "[" row:(from) "]""[" column:(from)? "]" _{
+    return{
+      "type": "array",
+      "row": row,
+      "column":column,
+      left
+    }
+  }
+  /_ left:iden "[" row:(from) "]" _{
+    return{
+      "type": "array",
+      "row": row,
+      left
+    }
+  }
+
+
 NumericLiteral
  = suffix:$(suffix) {
     return { "type": "Literal", value: suffix, class: "Number" }
@@ -485,6 +549,7 @@ DoubleQuoteCharacter
   = !'"' SourceCharacter { return text(); }
   
 SourceCharacter = .
+
 
 RelationalOperator
   = "<="
