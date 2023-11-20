@@ -1,0 +1,185 @@
+{
+    "type": "Program",
+    "body": [
+       {
+          "type": "Include",
+          "standardheader": "stdio.h"
+       },
+       {
+          "type": "FunctionDefinition",
+          "return value": "void",
+          "name": "hello",
+          "parameter": [
+             {
+                "Parameter": "void"
+             }
+          ],
+          "block": {
+             "type": "block",
+             "stmt": [
+                {
+                   "type": "FunctionExecution",
+                   "name": "printf",
+                   "parameter": [
+                      {
+                         "type": "Literal",
+                         "value": "呼び出してないよ\n",
+                         "class": "String"
+                      }
+                   ]
+                },
+                ";"
+             ]
+          }
+       },
+       {
+          "type": "FunctionDefinition",
+          "return value": "void",
+          "name": "func",
+          "parameter": [
+             {
+                "Parameter": "void"
+             }
+          ],
+          "block": {
+             "type": "block",
+             "stmt": [
+                {
+                   "type": "pointer",
+                   "model": "void",
+                   "value": {
+                      "type": "Identifier",
+                      "name": "buf"
+                   },
+                   "length": {
+                      "type": "Literal",
+                      "value": 5,
+                      "class": "Number"
+                   }
+                },
+                ";",
+                {
+                   "type": "staticvariable",
+                   "model": "int",
+                   "value": {
+                      "type": "Identifier",
+                      "name": "i"
+                   }
+                },
+                ";",
+                {
+                   "type": "ForStatement",
+                   "funcname": "for",
+                   "InitializeStatement": {
+                      "type": "AssignmentExpression",
+                      "operator": "=",
+                      "left": {
+                         "type": "Identifier",
+                         "name": "i"
+                      },
+                      "right": {
+                         "type": "Literal",
+                         "value": 0,
+                         "class": "Number"
+                      }
+                   },
+                   "condition": {
+                      "type": "BinaryExpression",
+                      "operator": "<",
+                      "left": {
+                         "type": "Identifier",
+                         "name": "i"
+                      },
+                      "right": {
+                         "type": "Literal",
+                         "value": 50,
+                         "class": "Number"
+                      }
+                   },
+                   "ChangeExpression": [
+                      {
+                         "type": "ChangeExpression",
+                         "Operator": "++",
+                         "left": {
+                            "type": "Identifier",
+                            "name": "i"
+                         },
+                         "right": 1
+                      }
+                   ],
+                   "block": {
+                      "type": "block",
+                      "stmt": [
+                         {
+                            "type": "AssignmentExpression",
+                            "operator": "=",
+                            "left": "buf[i]",
+                            "right": {
+                               "type": "Identifier",
+                               "name": "hello"
+                            }
+                         },
+                         ";"
+                      ]
+                   }
+                }
+             ]
+          }
+       },
+       {
+          "type": "FunctionDefinition",
+          "return value": "int",
+          "name": "main",
+          "parameter": [
+             {
+                "Parameter": "void"
+             }
+          ],
+          "block": {
+             "type": "block",
+             "stmt": [
+                {
+                   "type": "array",
+                   "model": "int",
+                   "value": {
+                      "type": "Identifier",
+                      "name": "buf"
+                   },
+                   "length": {
+                      "type": "Literal",
+                      "value": 1000,
+                      "class": "Number"
+                   }
+                },
+                ";",
+                {
+                   "type": "AssignmentExpression",
+                   "operator": "=",
+                   "left": "buf[999]",
+                   "right": {
+                      "type": "Literal",
+                      "value": 10,
+                      "class": "Number"
+                   }
+                },
+                ";",
+                {
+                   "type": "FunctionExecution",
+                   "name": "func",
+                   "parameter": null
+                },
+                ";",
+                {
+                   "type": "returnStatement",
+                   "value": {
+                      "type": "Literal",
+                      "value": 0,
+                      "class": "Number"
+                   }
+                },
+                ";"
+             ]
+          }
+       }
+    ]
+ }
