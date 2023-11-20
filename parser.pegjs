@@ -217,13 +217,26 @@ pointmodifier = _ model:Model"*" _ expr:expr _{ return {
                             expr
                             }
                        }
-                
+                /_ model:Model"*" _ iden:iden "[" int:from? "]" _{ return {
+							"type" : "pointer",
+							"model" : model,
+                            "value" : iden,
+                            "length" : int
+                            }
+                       }
                 /_ model:Model"*" _ iden:iden _{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
                             }
                        }
+                       
+staticvariable = _ "static" _ model:Model _ iden:iden _ { return{
+                            "type" : "staticvariable",
+                            "model" : model,
+                            "value" : iden
+                            }
+                        }
 
 Model = "void"
 	/"int"
@@ -235,6 +248,7 @@ Model = "void"
 vardeclarestmt = structmodifier
     /arraymodifier
     /pointmodifier
+    /staticvariable
     /variable
 
 
