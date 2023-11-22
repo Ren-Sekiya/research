@@ -103,9 +103,7 @@ stmt = returnstmt
     /function
     /vardeclarestmt
     /calcstmt
-    /EndSentence
-
-EndSentence = ";"
+   
 
 variable = 
           _ model:Model _  expr:expr _{ return {//int a=10
@@ -115,13 +113,13 @@ variable =
                             expr
                             }
                        }
-              /_ model:Model _ iden:ParameterList _{ return {//int a
+              /_ model:Model _ iden:ParameterList";"_{ return {//int a
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
                             }
                        }
-              / _ model:Model _ iden:iden _{ return {//int a,b,c
+              / _ model:Model _ iden:iden ";"_{ return {//int a,b,c
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
@@ -136,7 +134,7 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
                 
-                /_ model:$iden _ name:iden _{
+                /_ model:$iden _ name:iden ";"_{
 						return {
                         		 "type":"variable",
                                  "model":model,
@@ -144,13 +142,13 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
                 
-                /_ model:iden _ "*"+iden:(iden ( _ "," _ "*"+iden)*) _{ return {
+                /_ model:iden _ "*"+iden:(iden ( _ "," _ "*"+iden)*) ";"_{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
                             }
                        }
-                /_ model:iden["*"]+ _ iden:iden _{ return {
+                /_ model:iden["*"]+ _ iden:iden ";"_{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
@@ -164,7 +162,7 @@ structmodifier = _ model:$iden _ left:expr{
                                  block
                                }
                         }
-                / _ "typedef" _ "struct" _ (iden:iden)? _ block:block _ tagiden:iden _ {
+                / _ "typedef" _ "struct" _ (iden:iden)? _ block:block _ tagiden:iden ";"_ {
                         return { 
                                  "type":"structure",
                                  "model":tagiden,
@@ -172,7 +170,7 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
 
-arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  "{" right:ParameterList "}" _{
+arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  "{" right:ParameterList "}" ";"_{
     return{
       "type": "array",
       "model":model,
@@ -182,7 +180,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
-  /_ model:Model _ left:to "[" int:(from)? "]" _"="_ "{" right:ParameterList "}" {
+  /_ model:Model _ left:to "[" int:(from)? "]" _"="_ "{" right:ParameterList "}"";" _{
     return{
       "type": "array",
       "model":model,
@@ -191,7 +189,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
-  /_ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _{
+  /_ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" ";"_{
     return{
       "type": "array",
       "model":model,
@@ -201,7 +199,7 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
     }
   }
 
-  /_ model:Model _ iden:iden "[" int:from? "]" {
+  /_ model:Model _ iden:iden "[" int:from? "]" ";"_{
     return{
       "type": "array",
       "model":model,
@@ -217,21 +215,21 @@ pointmodifier = _ model:Model"*" _ expr:expr _{ return {
                             expr
                             }
                        }
-                /_ model:Model"*" _ iden:iden "[" int:from? "]" _{ return {
+                /_ model:Model"*" _ iden:iden "[" int:from? "]" ";"_{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden,
                             "length" : int
                             }
                        }
-                /_ model:Model"*" _ iden:iden _{ return {
+                /_ model:Model"*" _ iden:iden ";"_{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
                             }
                        }
                        
-staticvariable = _ "static" _ model:Model _ iden:iden _ { return{
+staticvariable = _ "static" _ model:Model _ iden:iden ";"_ { return{
                             "type" : "staticvariable",
                             "model" : model,
                             "value" : iden
@@ -261,14 +259,14 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
                         block
                      }
               }
-          / _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" _{
+          / _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" ";"_{
               return {
               			"type":"FunctionExecution",
                         "name":name,
                         "parameter":parameterlist
                      }
               }
-          / _ model:Model _ name:$word "(" parameterlist:ParameterList? ")" _{
+          / _ model:Model _ name:$word "(" parameterlist:ParameterList? ")"";" _{
               return {
               			"type":"FunctionDefinition",
                         "name":name,
@@ -292,14 +290,7 @@ Parameter = Parametervardeclarestmt
                }
            }
            
-Parametervardeclarestmt =  _ model:Model _  expr:expr _{ return {//int a=10
-							"type" : "variable",
-							"model" : model,
-                            "value":expr.left,
-                            expr
-                            }
-                       }
-                /_ model:Model"*" _ iden:iden _{ return {
+Parametervardeclarestmt =  _ model:Model"*" _ iden:iden _{ return {
 							"type" : "pointer",
 							"model" : model,
                             "value" : iden
@@ -368,15 +359,8 @@ whilestmt
                 block
             }
           }
-         /_ name:"while" "(" condition:condition ")" _ {
-        	return {
-            	"type": name + "Statement",
-                "funcname":name,
-                condition
-            }
-          }
 
-dostmt = _ name:"do" block:block "while" "(" condition:condition ")" _{
+dostmt = _ name:"do" block:block "while" "(" condition:condition ")" ";"_{
                       return{
                              "type":name + "Statement",
                              block,
@@ -384,7 +368,7 @@ dostmt = _ name:"do" block:block "while" "(" condition:condition ")" _{
                              }
                       }
 
-forstmt = _ name:"for" "(" InitializeStatement:stmt? ";" condition:(condition)? ";" ChangeExpression:(ChangeExpression)* ")" block:block _{
+forstmt = _ name:"for" "(" InitializeStatement:stmt? condition:(condition)? ";" ChangeExpression:(ChangeExpression)* ")" block:block _{
         	return {
             	"type": "ForStatement",
                 "funcname":name,
@@ -396,19 +380,19 @@ forstmt = _ name:"for" "(" InitializeStatement:stmt? ";" condition:(condition)? 
           }
 
 expr
-	= _ left:to _"="_ !ReservedWord right:function _{
+	= _ left:to _"="_ !ReservedWord right:function ";"_{
 		return sallow( left, right );
 	}
-    /_ left:to _"="_ right:(from) _{
+    /_ left:to _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
-    /_ left:( "("from")") _"="_ right:(from) _{
+    /_ left:( "("from")") _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
-    /_ left:$(to "[" from "]") _"="_ right:from _{
+    /_ left:$(to "[" from "]") _"="_ right:from ";"_{
 		return sallow( left, right );
 	}
-    /_ left:Expression _"="_ right:Expression _{
+    /_ left:Expression _"="_ right:Expression ";"_{
 		return sallow( left, right );
 	}
 
@@ -428,7 +412,7 @@ calcstmt
 		}
       }
 
-returnstmt = _ "return" _ value:from {
+returnstmt = _ "return" _ value:from ";"{
                 return{
                         "type":"returnStatement",
                         "value":value
@@ -447,7 +431,7 @@ Expression
     
 
 Term
-  = head:allow tail:(_ [*/] _ allow)* {
+  = head:allow tail:(_ [*/%] _ allow)* {
       return buildBinaryExpression(head, tail)
     }
 
