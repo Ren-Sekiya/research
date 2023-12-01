@@ -113,7 +113,7 @@ variable =
                             expr
                             }
                        }
-              /_ model:Model _ iden:ParameterList";"_{ return {//int a
+              /_ model:Model _ iden:multivariable";" _{ return {//int a
 							"type" : "variable",
 							"model" : model,
                             "value" : iden
@@ -125,6 +125,9 @@ variable =
                             "value" : iden
                             }
                        }
+                       
+multivariable= head:iden tail:("," iden)+ {return[head].concat(tail.map(item => item[1]));
+                }
            
 structmodifier = _ model:$iden _ left:expr{
 						return {
