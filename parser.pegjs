@@ -380,7 +380,7 @@ forstmt = _ name:"for" "(" InitializeStatement:stmt? condition:(condition)? ";" 
           }
 
 expr
-	= _ left:to _"="_ !ReservedWord right:function ";"_{
+	= _ left:to _"="_ right:function _{
 		return sallow( left, right );
 	}
     /_ left:to _"="_ right:(from)";" _{
