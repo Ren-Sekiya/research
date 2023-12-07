@@ -392,7 +392,7 @@ expr
     /_ left:( "("from")") _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
-    /_ left:$(to "[" from "]") _"="_ right:from ";"_{
+    /_ left:(arrayLiteral) _"="_ right:from ";"_{
 		return sallow( left, right );
 	}
     /_ left:Expression _"="_ right:Expression ";"_{
@@ -534,16 +534,16 @@ syuutan = "'" "¥0" "'"
 arrayLiteral = _ left:iden "[" row:(from) "]""[" column:(from)? "]" _{
     return{
       "type": "array",
+      "Identifiername":left,
       "row": row,
       "column":column,
-      left
     }
   }
-  /_ left:iden "[" row:(from) "]" _{
+  /_ left:iden "[" length:(from) "]" _{
     return{
       "type": "array",
-      "row": row,
-      left
+      "Identifiername":left,
+      "lenght": length
     }
   }
 
