@@ -387,11 +387,11 @@ dostmt = _ name:"do" block:block "while" "(" condition:condition ")" ";"_{
                              }
                       }
 
-forstmt = _ name:"for" "(" _ InitializeStatement:stmt? _ condition:(condition)? ";" _ ChangeExpression:(ChangeExpression)* _ ")" block:block _{
+forstmt = _ name:"for" "(" _ AssignmentExpression:stmt? _ condition:(condition)? ";" _ ChangeExpression:(ChangeExpression)* _ ")" block:block _{
         	return {
             	"type": "ForStatement",
                 "funcname":name,
-                InitializeStatement,
+                AssignmentExpression,
                 condition,
                 ChangeExpression,
                 block
@@ -695,6 +695,12 @@ ExprOperator
             return{
             	"type":"BinaryExpression",
                 "operator":"/",
+            }
+         }
+  / "%=" {
+           return{
+                "type":"BinaryExpression",
+                "operator":"%",
             }
          }
 
