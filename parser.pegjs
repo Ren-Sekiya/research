@@ -190,13 +190,12 @@ structmodifier = _ model:$iden _ left:expr{
                                }
                         }
 
-arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" _"="_  "{" right:ParameterList "}" ";"_{
+arraymodifier = _ model:Model _ left:to arraydeep:arraydeep _"="_  "{" right:ParameterList "}" ";"_{
     return{
       "type": "array",
       "model":model,
-      "row": row,
-      "column":column,
-      left,
+      "value":left,
+      arraydeep,
       right
     }
   }
