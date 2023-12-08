@@ -16,6 +16,23 @@
       };
     }, head);
   }
+  
+  function sallowbinary( head, tail ) {
+	return {
+        "type": "AssignmentExpression",
+		"operator": "=",
+        left:head,
+         "right": bin(head, tail)
+    }
+  }
+  function bin( head, tail ) {
+	return {
+        "type": "BinaryExpression",
+		"operator": tail[0],
+        left:head,
+        right:tail[1]
+    }
+  }
   function buildPipelineExpression(head, tail) {
     return tail.reduce(function(result, element) {
       return {
@@ -192,14 +209,12 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
       right
     }
   }
-  /_ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]" ";"_{
+  /_ model:Model _ left:to arraydeep:arraydeep ";"_{
     return{
       "type": "array",
       "model":model,
       "name":left,
-      "row": row,
-      "column":column,
-      
+      arraydeep,
     }
   }
 
@@ -393,12 +408,13 @@ expr
     /_ left:( "("from")") _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
-    /_ left:(arrayLiteral) _"="_ right:from ";"_{
+    /_ left:(anyarray) _"="_ right:from ";"_{
 		return sallow( left, right );
 	}
     /_ left:Expression _"="_ right:Expression ";"_{
 		return sallow( left, right );
 	}
+    /AssignmentExpression
 
           
 block = _ "{" _ stmt:(multistmt)* _ "}" _{ 
@@ -409,9 +425,15 @@ block = _ "{" _ stmt:(multistmt)* _ "}" _{
            }
 
 calcstmt
-	= _ expression:from _{
+	= _ expression:ChangeExpression2 _{
+        return {
+            "type":"ExpressionStatement",
+            expression
+          }
+        }
+  /_ expression:from _{
 		return {
-			"type": "ExpressionStatement1",
+			"type": "ExpressionStatement",
             expression                                                                                                
 		}
       }
@@ -447,7 +469,7 @@ allow
 Factor
   = "{" _ compstmt:ParameterList _ "}" { return compstmt; }
   /"(" _ expr:Expression _ ")" { return expr; }
-  /arrayList2
+  /anyarray
   /NumericLiteral
   /StringLiteral
   /iden
@@ -471,10 +493,12 @@ iden
        /"*"word:$(word){
        return {"type":"Pointer", name:word}
        }
+       /"*" "(" expr:Expression ")"{
+       return {"type":"Pointer", expr:expr}
+       }
        /"&"word:$(word){
        return {"type":"address", name:word}
        }
-       
        
 word
      = word:[a-zA-Z][0-9a-zA-Z_]*
@@ -513,7 +537,7 @@ RelationExpression
      }
 
 ChangeExpression
-  = iden:iden "++" _ {
+  = _ iden:iden "++" _ {
                     return {
                            "type":"ChangeExpression",
                            "Operator":"++",
@@ -521,7 +545,57 @@ ChangeExpression
                            "right":1
                            }
                     }
-    /iden:iden "--" _ {
+    /iden:iden "--"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"--",
+                           "left":iden,
+                           "right":-1
+                           }
+                    }
+    / "++" iden:iden _ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"++",
+                           "left":iden,
+                           "right":1
+                           }
+                    }
+    /"--" iden:iden _ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"--",
+                           "left":iden,
+                           "right":-1
+                           }
+                    }
+                    
+ChangeExpression2
+  = _ iden:iden "++" ";"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"++",
+                           "left":iden,
+                           "right":1
+                           }
+                    }
+    /iden:iden "--"";"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"--",
+                           "left":iden,
+                           "right":-1
+                           }
+                    }
+    / "++" iden:iden ";"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"++",
+                           "left":iden,
+                           "right":1
+                           }
+                    }
+    /"--" iden:iden ";"_ {
                     return {
                            "type":"ChangeExpression",
                            "Operator":"--",
@@ -532,18 +606,28 @@ ChangeExpression
 
 syuutan = "'" "¥0" "'"
 
-arrayLiteral = _ "[" length:(from) "]" _{
-    return{
-      "type": "array",
-      "length": length
-    }
-  }
+arrayelement =  length:from{
+    			return{
+      				"type": "array",
+      				"location": length
+   				 }
+  			}
+            
+decarrayelement =  length:from{
+    			return{
+      				"type": "array",
+      				"length": length
+   				 }
+  			}
   
-arrayList2 = head:iden tail:(arrayLiteral)+ {
-                return {
-                "Identifiername":head,
-                "location":tail}
-                }
+anyarray = head:iden tail:("["arrayelement"]")+ {
+                return [head].concat(tail.map(item => item[1]));
+           }
+
+arraydeep =  tail:("[" decarrayelement "]" )+ {
+                return (tail.map(item => item[1]));
+           }
+
 
 
 NumericLiteral
@@ -583,9 +667,36 @@ RelationalOperator
   / "|"
   / "~"
 
-ChangeOperator
-  = "++" 
-  / "--"
+AssignmentExpression = 
+				_ left:iden right:( ExprOperator  from) _{
+                			return sallowbinary(left, right);
+                            }
+
+ExprOperator
+  =  "+=" {
+            return{
+            	"type":"BinaryExpression",
+                "operator":"+",
+            }
+         }
+  / "-=" {
+            return{
+            	"type":"BinaryExpression",
+                "operator":"-",
+            }
+         }
+  / "*=" {
+            return{
+            	"type":"BinaryExpression",
+                "operator":"*",
+            }
+         }
+  / "/=" {
+            return{
+            	"type":"BinaryExpression",
+                "operator":"/",
+            }
+         }
 
 ConvertOperator
   = "%d"
