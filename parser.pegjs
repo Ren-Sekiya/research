@@ -196,9 +196,10 @@ arraymodifier = _ model:Model _ left:to "[" row:(from) "]""[" column:(from)? "]"
     return{
       "type": "array",
       "model":model,
+      "name":left,
       "row": row,
       "column":column,
-      "name":left
+      
     }
   }
 
@@ -371,7 +372,7 @@ dostmt = _ name:"do" block:block "while" "(" condition:condition ")" ";"_{
                              }
                       }
 
-forstmt = _ name:"for" "(" InitializeStatement:stmt? condition:(condition)? ";" ChangeExpression:(ChangeExpression)* ")" block:block _{
+forstmt = _ name:"for" "(" _ InitializeStatement:stmt? _ condition:(condition)? ";" _ ChangeExpression:(ChangeExpression)* _ ")" block:block _{
         	return {
             	"type": "ForStatement",
                 "funcname":name,
@@ -446,7 +447,7 @@ allow
 Factor
   = "{" _ compstmt:ParameterList _ "}" { return compstmt; }
   /"(" _ expr:Expression _ ")" { return expr; }
-  /arrayLiteral
+  /arrayList2
   /NumericLiteral
   /StringLiteral
   /iden
@@ -531,21 +532,18 @@ ChangeExpression
 
 syuutan = "'" "¥0" "'"
 
-arrayLiteral = _ left:iden "[" row:(from) "]""[" column:(from)? "]" _{
+arrayLiteral = _ "[" length:(from) "]" _{
     return{
       "type": "array",
-      "Identifiername":left,
-      "row": row,
-      "column":column,
+      "length": length
     }
   }
-  /_ left:iden "[" length:(from) "]" _{
-    return{
-      "type": "array",
-      "Identifiername":left,
-      "lenght": length
-    }
-  }
+  
+arrayList2 = head:iden tail:(arrayLiteral)+ {
+                return {
+                "Identifiername":head,
+                "location":tail}
+                }
 
 
 NumericLiteral
