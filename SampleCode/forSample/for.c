@@ -2,7 +2,7 @@
   
 int main(void) {
 
-  for(int a;a < 5;a++){
+  for(int a = 0; a < 5; a++){
   printf("Hello World");
   }
     
