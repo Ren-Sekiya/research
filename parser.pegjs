@@ -615,6 +615,12 @@ arrayelement =  length:from{
       				"location": length
    				 }
   			}
+            /length:_{
+    			return{
+      				"type": "array",
+      				"location": null
+   				 }
+  			}
             
 decarrayelement =  length:from{
     			return{
@@ -622,12 +628,18 @@ decarrayelement =  length:from{
       				"length": length
    				 }
   			}
+            /length:_{
+    			return{
+      				"type": "array",
+      				"length": null
+   				 }
+  			}
   
 anyarray = head:iden tail:("["arrayelement"]")+ {
                 return [head].concat(tail.map(item => item[1]));
            }
 
-arraydeep =  tail:("[" decarrayelement "]" )+ {
+arraydeep =  tail:("[" decarrayelement "]")+ {
                 return (tail.map(item => item[1]));
            }
 
