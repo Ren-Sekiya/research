@@ -672,31 +672,31 @@ AssignmentExpression =
                             }
 
 ExprOperator
-  =  "+=" {
+  = _ "+=" _{
             return{
             	"type":"BinaryExpression",
                 "operator":"+",
             }
          }
-  / "-=" {
+  /_ "-=" _{
             return{
             	"type":"BinaryExpression",
                 "operator":"-",
             }
          }
-  / "*=" {
+  /_ "*=" _{
             return{
             	"type":"BinaryExpression",
                 "operator":"*",
             }
          }
-  / "/=" {
+  /_ "/=" _{
             return{
             	"type":"BinaryExpression",
                 "operator":"/",
             }
          }
-  / "%=" {
+  /_ "%=" _{
            return{
                 "type":"BinaryExpression",
                 "operator":"%",
