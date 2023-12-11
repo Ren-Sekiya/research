@@ -25,6 +25,7 @@
          "right": assignmentBinary(head, tail)
     }
   }
+  
   function assignmentBinary( head, tail ) {
 	return {
         "type": "BinaryExpression",
@@ -33,10 +34,44 @@
         right:tail[3]
     }
   }
-  function substring(tail){
-  		return tail.substr(0,1);
-        }
-  function buildIncrementBinary( head, tail ) {
+  
+  function buildPostIncrementBinary( head, tail ) {
+	return {
+        "type": "AssignmentExpression",
+		"operator": "=",
+        left:head,
+         "right": postIncrementBinary(head, tail)
+    }
+  }
+  
+  function postIncrementBinary( head, tail ) {//a++
+	return {
+        "type": "PostBinaryExpression",
+		"operator": "+",
+        left:head,
+        right:tail
+    }
+  }
+  
+  function buildPostDecrementBinary( head, tail ) {//a--
+	return {
+        "type": "AssignmentExpression",
+		"operator": "=",
+        left:head,
+         "right": postDecrementBinary(head, tail)
+    }
+  }
+  
+  function postDecrementBinary( head, tail ) {//a--
+	return {
+        "type": "PostBinaryExpression",
+		"operator": "-",
+        left:head,
+        right:tail
+    }
+  }
+  
+  function buildIncrementBinary( head, tail ) {//++a
 	return {
         "type": "AssignmentExpression",
 		"operator": "=",
@@ -45,7 +80,7 @@
     }
   }
   
-  function incrementBinary( head, tail ) {
+  function incrementBinary( head, tail ) {//++a
 	return {
         "type": "BinaryExpression",
 		"operator": "+",
@@ -53,6 +88,25 @@
         right:tail
     }
   }
+  
+  function buildDecrementBinary( head, tail ) {//--a;
+	return {
+        "type": "AssignmentExpression",
+		"operator": "=",
+        left:head,
+         "right": decrementBinary(head, tail)
+    }
+  }
+  
+  function decrementBinary( head, tail ) {//--a
+	return {
+        "type": "BinaryExpression",
+		"operator": "-",
+        left:head,
+        right:tail
+    }
+  }
+  
   function buildPipelineExpression(head, tail) {
     return tail.reduce(function(result, element) {
       return {
@@ -535,55 +589,30 @@ RelationExpression
      }
 ChangeExpression
   = _ left:iden right:IncrementOperator _ {
-                    return buildIncrementBinary(left, right);
+                    return buildPostIncrementBinary(left, right);
                     }
-    /left:iden IncrementOperator _ {
-                     return buildIncrementBinary(left, right);
+    /left:iden right:DecrementOperator _ {
+                     return buildPostDecrementBinary(left, right);
                     }
-    / IncrementOperator iden:iden _ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"++",
-                           "left":iden,
-                           "right":1
-                           }
+    / right:IncrementOperator left:iden _ {
+                    return  buildIncrementBinary(left, right);
                     }
-    /IncrementOperator iden:iden _ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
-                           "left":iden,
-                           "right":-1
-                           }
+    / right:IncrementOperator left:iden _ {
+                    return buildDecrementBinary(left, right);
                     }
                     
 ChangeExpression2
   = _ left:iden right:IncrementOperator ";"_ {
-                    return buildIncrementBinary(left, right);
+                    return buildPostIncrementBinary(left, right);
                     }
-    /iden:iden IncrementOperator";"_ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
-                           "left":iden,
-                           "right":-1
-                           }
+    / left:iden right:DecrementOperator";"_ {
+                    return buildPostDecrementBinary(left, right);
                     }
-    / IncrementOperator iden:iden ";"_ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"+",
-                           "left":iden,
-                           "right":1
-                           }
+    / right:IncrementOperator left:iden ";"_ {
+                    return  buildIncrementBinary(left, right);
                     }
-    /IncrementOperator iden:iden ";"_ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
-                           "left":iden,
-                           "right":-1
-                           }
+    / right:DecrementOperator left:iden ";"_ {
+                    return  buildDecrementBinary(left, right);
                     }
 syuutan = "'" "¥0" "'"
 arrayelement =  length:from{
@@ -684,10 +713,12 @@ IncrementOperator
                     "class": "Number"
             }
         }
-   / "--"{
+DecrementOperator
+  ="--"{
    			return {
-            		"type":"BinaryExpression",
-                	"operator":"-"
+            		"type": "Literal", 
+                    "value": -1, 
+                    "class": "Number"
             }
         }
         
