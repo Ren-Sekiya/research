@@ -17,37 +17,20 @@
     }, head);
   }
   
-  function buildAssignmentBinary( head, tail ) {
+  function sallowbinary( head, tail ) {
 	return {
         "type": "AssignmentExpression",
 		"operator": "=",
         left:head,
-         "right": assignmentBinary(head, tail)
+         "right": bin(head, tail)
     }
   }
-  function assignmentBinary( head, tail ) {
+  function bin( head, tail ) {
 	return {
         "type": "BinaryExpression",
 		"operator": tail[0],
         left:head,
         right:tail[1]
-    }
-  }
-  function buildIncrementBinary( head, tail ) {
-	return {
-        "type": "AssignmentExpression",
-		"operator": "=",
-        left:head,
-         "right": incrementBinary(head, tail)
-    }
-  }
-  
-  function incrementBinary( head, tail ) {
-	return {
-        "type": "BinaryExpression",
-		"operator": "+",
-        left:head,
-        right:tail
     }
   }
   function buildPipelineExpression(head, tail) {
@@ -431,11 +414,15 @@ expr
 		return sallow( left, right );
 	}
     /AssignmentExpression
-    /ChangeExpression2
-    /ChangeExpression
 
           
 block = _ "{" _ stmt:(multistmt)* _ "}" _{ 
+			return {
+            			"type": "block",
+						stmt
+            }
+           }
+           /_ stmt:(multistmt)* _{ 
 			return {
             			"type": "block",
 						stmt
@@ -555,53 +542,68 @@ RelationExpression
      }
 
 ChangeExpression
-  = _ left:iden right:IncrementOperator _ {
-                    return buildIncrementBinary(left, right);
-                    }
-    /left:iden IncrementOperator _ {
-                     return buildIncrementBinary(left, right);
-                    }
-    / IncrementOperator iden:iden _ {
+  = _ iden:iden "++" _ {
                     return {
-                           "type":"BinaryExpression",
+                           "type":"ChangeExpression",
                            "Operator":"++",
                            "left":iden,
                            "right":1
                            }
                     }
-    /IncrementOperator iden:iden _ {
+    /iden:iden "--"_ {
                     return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
+                           "type":"ChangeExpression",
+                           "Operator":"--",
+                           "left":iden,
+                           "right":-1
+                           }
+                    }
+    / "++" iden:iden _ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"++",
+                           "left":iden,
+                           "right":1
+                           }
+                    }
+    /"--" iden:iden _ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"--",
                            "left":iden,
                            "right":-1
                            }
                     }
                     
 ChangeExpression2
-  = _ left:iden right:IncrementOperator ";"_ {
-                    return buildIncrementBinary(left, right);
-                    }
-    /iden:iden IncrementOperator";"_ {
+  = _ iden:iden "++" ";"_ {
                     return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
-                           "left":iden,
-                           "right":-1
-                           }
-                    }
-    / IncrementOperator iden:iden ";"_ {
-                    return {
-                           "type":"BinaryExpression",
-                           "Operator":"+",
+                           "type":"ChangeExpression",
+                           "Operator":"++",
                            "left":iden,
                            "right":1
                            }
                     }
-    /IncrementOperator iden:iden ";"_ {
+    /iden:iden "--"";"_ {
                     return {
-                           "type":"BinaryExpression",
-                           "Operator":"-",
+                           "type":"ChangeExpression",
+                           "Operator":"--",
+                           "left":iden,
+                           "right":-1
+                           }
+                    }
+    / "++" iden:iden ";"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"++",
+                           "left":iden,
+                           "right":1
+                           }
+                    }
+    /"--" iden:iden ";"_ {
+                    return {
+                           "type":"ChangeExpression",
+                           "Operator":"--",
                            "left":iden,
                            "right":-1
                            }
@@ -615,12 +617,6 @@ arrayelement =  length:from{
       				"location": length
    				 }
   			}
-            /length:_{
-    			return{
-      				"type": "array",
-      				"location": null
-   				 }
-  			}
             
 decarrayelement =  length:from{
     			return{
@@ -628,18 +624,12 @@ decarrayelement =  length:from{
       				"length": length
    				 }
   			}
-            /length:_{
-    			return{
-      				"type": "array",
-      				"length": null
-   				 }
-  			}
   
 anyarray = head:iden tail:("["arrayelement"]")+ {
                 return [head].concat(tail.map(item => item[1]));
            }
 
-arraydeep =  tail:("[" decarrayelement "]")+ {
+arraydeep =  tail:("[" decarrayelement "]" )+ {
                 return (tail.map(item => item[1]));
            }
 
@@ -683,39 +673,39 @@ RelationalOperator
   / "~"
 
 AssignmentExpression = 
-				_ left:iden right:( ExprOperator  from) ";"_{
-                			return buildAssignmentBinary(left, right);
+				_ left:iden right:( ExprOperator  from) _{
+                			return sallowbinary(left, right);
                             }
 
 ExprOperator
-  = _ "+=" _{
+  =  "+=" {
             return{
             	"type":"BinaryExpression",
-                "operator":"+"
+                "operator":"+",
             }
          }
-  /_ "-=" _{
+  / "-=" {
             return{
             	"type":"BinaryExpression",
-                "operator":"-"
+                "operator":"-",
             }
          }
-  /_ "*=" _{
+  / "*=" {
             return{
             	"type":"BinaryExpression",
-                "operator":"*"
+                "operator":"*",
             }
          }
-  /_ "/=" _{
+  / "/=" {
             return{
             	"type":"BinaryExpression",
-                "operator":"/"
+                "operator":"/",
             }
          }
-  /_ "%=" _{
+  / "%=" {
            return{
                 "type":"BinaryExpression",
-                "operator":"%"
+                "operator":"%",
             }
          }
 
@@ -733,23 +723,6 @@ ConvertOperator
 ReferenceOperator 
   = "->"
   / "."
-
-IncrementOperator 
-  = "++"{ 
-  			return {
-  					"type": "Literal", 
-                    "value": 1, 
-                    "class": "Number"
-            }
-        }
-   / "--"{
-   			return {
-            		"type":"BinaryExpression",
-                	"operator":"-"
-            }
-        }
-        
-  				
 
 float = int frac digits
 
