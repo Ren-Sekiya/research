@@ -422,6 +422,13 @@ block = _ "{" _ stmt:(multistmt)* _ "}" _{
 						stmt
             }
            }
+            /_ stmt:(multistmt)* _{ 
+			return {
+            			"type": "block",
+						stmt
+            }
+           }
+           
 calcstmt
 	= _ expression:ChangeExpression2 _{
         return {
@@ -451,10 +458,11 @@ Term
   = head:logical tail:(_ [*/%] _ logical)* {
       return buildBinaryExpression(head, tail)
     }
-logical
-  =head:allow tail:(_ [^~|&] _ allow)* {
+    logical
+  =head:allow tail:(_ [¥^~&|] _ allow)* {
       return buildBinaryExpression(head, tail)
     }
+
 allow
   = head:Factor tail:(_ ReferenceOperator _ Factor)* {
       return buildReferenceExpression(head, tail)
