@@ -641,11 +641,11 @@ decarrayelement =  length:from{
    				 }
   			}
 
-anyarray = head:iden tail:("["arrayelement"]")+ {
+anyarray = head:iden tail:("["arrayelement"]"_)+ {
                 return [head].concat(tail.map(item => item[1]));
            }
 
-arraydeep =  tail:("[" decarrayelement "]")+ {
+arraydeep =  tail:("[" decarrayelement "]"_)+ {
                 return (tail.map(item => item[1]));
            }
 
