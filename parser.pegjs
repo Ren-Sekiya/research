@@ -471,16 +471,25 @@ dostmt = _ name:"do" block:block "while" "(" condition:condition ")" ";"_{
                              condition
                              }
                       }
-forstmt = _ name:"for" "(" _ AssignmentExpression:stmt? _ condition:(condition)? ";" _ ChangeExpression:(ChangeExpression)* _ ")" block:block _{
+forstmt = _ name:"for" "(" _ assign:stmt? ";" _ condition:(condition)? ";" _ change:stmt? _  ")" block:block _{
         	return {
             	"type": "ForStatement",
-                "funcname":name,
-                AssignmentExpression,
+                assign,
                 condition,
-                ChangeExpression,
+                change,
                 block
             }
           }
+          /_ name:"for" "(" _ assign:stmt? _ condition:(condition)? ";" _ change:stmt? _  ")" block:block _{
+        	return {
+            	"type": "ForStatement",
+                assign,
+                condition,
+                change,
+                block
+            }
+          }
+          
 expr
 	= _ left:to _"="_ right:function _{
 		return sallow( left, right );
@@ -495,6 +504,9 @@ expr
 		return sallow( left, right );
 	}
     /_ left:Expression _"="_ right:Expression ";"_{
+		return sallow( left, right );
+	}
+    /_ left:Expression _"="_ right:Expression _{
 		return sallow( left, right );
 	}
     /AssignmentExpression
