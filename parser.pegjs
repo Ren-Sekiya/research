@@ -35,6 +35,22 @@
     }
   }
   
+  function InPostBinaryExpression(head, tail) {
+    return {
+        "type":"PostBinaryExpression",
+        "name":head,
+        "post":buildPostIncrementBinary(head, tail)
+    }
+  }
+  
+  function DecPostBinaryExpression(head, tail) {
+    return {
+        "type":"PostBinaryExpression",
+        "name":head,
+        "post":buildPostDecrementBinary(head, tail)
+    }
+  }
+  
   function buildPostIncrementBinary( head, tail ) {
 	return {
         "type": "AssignmentExpression",
@@ -46,7 +62,7 @@
   
   function postIncrementBinary( head, tail ) {//a++
 	return {
-        "type": "PostBinaryExpression",
+        "type": "BinaryExpression",
 		"operator": "+",
         left:head,
         right:tail
@@ -64,7 +80,7 @@
   
   function postDecrementBinary( head, tail ) {//a--
 	return {
-        "type": "PostBinaryExpression",
+        "type": "BinaryExpression",
 		"operator": "-",
         left:head,
         right:tail
@@ -609,10 +625,10 @@ RelationExpression
      }
 ChangeExpression
   = _ left:iden right:IncrementOperator _ {
-                    return buildPostIncrementBinary(left, right);
+                    return InPostBinaryExpression(left, right);
                     }
     /left:iden right:DecrementOperator _ {
-                     return buildPostDecrementBinary(left, right);
+                     return DecPostBinaryExpression(left, right);
                     }
     / right:IncrementOperator left:iden _ {
                     return  buildIncrementBinary(left, right);
@@ -623,10 +639,10 @@ ChangeExpression
                     
 ChangeExpression2
   = _ left:iden right:IncrementOperator ";"_ {
-                    return buildPostIncrementBinary(left, right);
+                    return InPostBinaryExpression(left, right);
                     }
     / left:iden right:DecrementOperator";"_ {
-                    return buildPostDecrementBinary(left, right);
+                    return DecPostBinaryExpression(left, right);
                     }
     / right:IncrementOperator left:iden ";"_ {
                     return  buildIncrementBinary(left, right);
