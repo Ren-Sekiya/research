@@ -408,7 +408,7 @@ ifstmt
                 condition,
                 block,
                 elseif,
-                endelse
+                "else":endelse
             }
           }
           /_ name:"if" "(" condition:condition ")" block:block  elseif:elseifstmt+ _ {
@@ -426,7 +426,7 @@ ifstmt
                 "funcname":name,
                 condition,
                 block,
-                endelse
+                "else":endelse
             }
           }
           /_ name:"if" "(" condition:condition ")" block:block  _ {
