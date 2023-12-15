@@ -666,7 +666,7 @@ arraydeep =  tail:("[" decarrayelement "]"_)+ {
                 return (tail.map(item => item[1]));
            }
            
-arraylocation = word:$(word) anyarray:anyarray{
+arraylocation = _ word:$(word) anyarray:anyarray _ {
                return { "type":"array", "name":word, arraydeep:anyarray}
                }
 
