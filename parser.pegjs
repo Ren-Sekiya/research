@@ -474,7 +474,7 @@ expr
     /_ left:( "("from")") _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
-    /_ left:(anyarray) _"="_ right:from ";"_{
+    /_ left:(arraylocation) _"="_ right:from ";"_{
 		return sallow( left, right );
 	}
     /_ left:Expression _"="_ right:Expression ";"_{
@@ -541,7 +541,6 @@ allow
 Factor
   = "{" _ compstmt:ParameterList _ "}" { return compstmt; }
   /"(" _ expr:Expression _ ")" { return expr; }
-  /anyarray
   /NumericLiteral
   /StringLiteral
   /iden
