@@ -322,11 +322,13 @@ Model = "void"
     /"double"
     /"char"
     /$("struct" _ iden)
+    
 vardeclarestmt = structmodifier
     /arraymodifier
     /pointmodifier
     /staticvariable
     /variable
+
 function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" block:block _{
               return {
               			"type":"FunctionDefinition",
@@ -569,6 +571,9 @@ iden
        /"&"word:$(word){
        return {"type":"address", name:word}
        }
+       /word:$(word) anyarray:anyarray {
+       return {"type":"array", arraydeep:anyarray }
+       }
        
 word
      = word:[a-zA-Z][0-9a-zA-Z_]*
@@ -585,7 +590,8 @@ _ "whitespace"
   = [ \t\n\r]*
   
 from
-  = ChangeExpression
+  = arraylocation
+  /ChangeExpression
   /syuutan
   /RelationExpression
   / value:NumericLiteral{
@@ -632,37 +638,37 @@ ChangeExpression2
 syuutan = "'" "¥0" "'"
 arrayelement =  length:from{
     			return{
-      				"type": "array",
       				"location": length
    				 }
   			}
             /length:_{
     			return{
-      				"type": "array",
       				"location": null
    				 }
   			}
 
 decarrayelement =  length:from{
     			return{
-      				"type": "array",
       				"length": length
    				 }
   			}
             /length:_{
     			return{
-      				"type": "array",
       				"length": null
    				 }
   			}
 
-anyarray = head:iden tail:("["arrayelement"]"_)+ {
-                return [head].concat(tail.map(item => item[1]));
+anyarray = tail:("["arrayelement"]"_)+ {
+                return (tail.map(item => item[1]));
            }
 
 arraydeep =  tail:("[" decarrayelement "]"_)+ {
                 return (tail.map(item => item[1]));
            }
+           
+arraylocation = word:$(word) anyarray:anyarray{
+               return { "type":"array", "name":word, arraydeep:anyarray}
+               }
 
 NumericLiteral
  = suffix:$(suffix) {
