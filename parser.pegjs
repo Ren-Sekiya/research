@@ -401,26 +401,7 @@ multideclare = head:Parameter tail:("," Parameter)* {
                 }
 
 ifstmt
-	 	= _ name:"if" "(" condition:condition ")" block:block elseif:elseifstmt+ endelse:elsestmt _ {
-        	return {
-            	"type": name + "Statement",
-                "funcname":name,
-                condition,
-                block,
-                elseif,
-                "else":endelse
-            }
-          }
-          /_ name:"if" "(" condition:condition ")" block:block  elseif:elseifstmt+ _ {
-        	return {
-            	"type": name + "Statement",
-                "funcname":name,
-                condition,
-                block,
-                elseif
-            }
-          }
-          /_ name:"if" "(" condition:condition ")" block:block endelse:elsestmt _ {
+	 	= _ name:"if" "(" condition:condition ")" block:block endelse:elsestmt? _ {
         	return {
             	"type": name + "Statement",
                 "funcname":name,
@@ -429,32 +410,23 @@ ifstmt
                 "else":endelse
             }
           }
-          /_ name:"if" "(" condition:condition ")" block:block  _ {
-        	return {
-            	"type": name + "Statement",
-                "funcname":name,
-                condition,
-                block
-            }
-          }
-          
-elseifstmt 
-        = _ name:"else if" "(" condition:condition ")" block:block _ {
-        	return {
-            	"type": name + "Statement",
-                "funcname":name,
-                condition,
-                block
-            }
-          }
+         
 elsestmt
-        = _ name:"else" block:block _ {
+        = _ "else" _ name:"if" "(" condition:condition ")" block:block endelse:elsestmt? _ {
         	return {
             	"type": name + "Statement",
                 "funcname":name,
+                condition,
+                block,
+                "else":endelse
+            }
+          }
+        /_ name:"else" block:block _ {
+        	return {
                 block
             }
           }
+        
 whilestmt
 	 	= _ name:"while" "(" condition:condition ")" block:block _ {
         	return {
