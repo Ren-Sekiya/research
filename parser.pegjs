@@ -471,7 +471,7 @@ dostmt = _ name:"do" block:block "while" "(" condition:condition ")" ";"_{
                              condition
                              }
                       }
-forstmt = _ name:"for" "(" _ assign:stmt? ";" _ condition:(condition)? ";" _ change:calcstmt _  ")" block:block _{
+forstmt = _ name:"for" "(" _ assign:stmt? ";" _ condition:(condition)? ";" _ change:calcstmt? _  ")" block:block _{
         	return {
             	"type": "ForStatement",
                 assign,
@@ -480,7 +480,7 @@ forstmt = _ name:"for" "(" _ assign:stmt? ";" _ condition:(condition)? ";" _ cha
                 block
             }
           }
-          /_ name:"for" "(" _ assign:stmt? _ condition:(condition)? ";" _ change:calcstmt _  ")" block:block _{
+          /_ name:"for" "(" _ assign:stmt? _ condition:(condition)? ";" _ change:calcstmt? _  ")" block:block _{
         	return {
             	"type": "ForStatement",
                 assign,
