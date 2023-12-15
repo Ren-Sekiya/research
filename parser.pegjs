@@ -270,38 +270,19 @@ structmodifier = _ model:$iden _ left:expr{
                                  block
                                }
                         }
-arraymodifier = _ model:Model _ left:to arraydeep:arraydeep _"="_  "{" right:ParameterList "}" ";"_{
+arraymodifier = _ model:Model _ value:expr ";"_{
     return{
       "type": "array",
       "model":model,
-      "value":left,
-      arraydeep,
-      right
+      value
     }
   }
-  /_ model:Model _ left:to "[" int:(from)? "]" _"="_ "{" right:ParameterList "}"";" _{
+  /_ model:Model _ iden:to arraydeep:arraydeep ";"_{
     return{
       "type": "array",
       "model":model,
-      "length": int,
-      left,
-      right
-    }
-  }
-  /_ model:Model _ left:to arraydeep:arraydeep ";"_{
-    return{
-      "type": "array",
-      "model":model,
-      "name":left,
-      arraydeep,
-    }
-  }
-  /_ model:Model _ iden:iden "[" int:from? "]" ";"_{
-    return{
-      "type": "array",
-      "model":model,
-      "value":iden,
-      "length": int
+      "name":iden,
+      arraydeep
     }
   }
   
@@ -490,6 +471,9 @@ expr
     /_ left:( "("from")") _"="_ right:(from)";" _{
 		return sallow( left, right );
 	}
+    /_ left:toarraydeep _ "=" _ "{" right:ParameterList "}"_{
+        return sallow( left, right );
+    }
     /_ left:(arraylocation) _"="_ right:from ";"_{
 		return sallow( left, right );
 	}
@@ -502,7 +486,14 @@ expr
     /AssignmentExpression
     /ChangeExpression2
     /ChangeExpression
-          
+    
+toarraydeep = iden:iden arraydeep:arraydeep {
+            return {
+                   "name":iden,
+                   arraydeep
+            }
+          }
+
 block = _ "{" _ stmt:(multistmt)* _ "}" _{ 
 			return {
             			"type": "block",
