@@ -694,6 +694,7 @@ StringLiteral
   = '"' chars:DoubleQuoteCharacter* '"' {
     return { type: "Literal", value: chars.join(""), class: "String" };
   }
+  
 DoubleQuoteCharacter
   = !'"' SourceCharacter { return text(); }
   
@@ -750,18 +751,26 @@ DecrementOperator
         }
         
   				
-float = int frac digits
+float = signe? int frac digits
+
 suffix = int frac digits word
+
 hexint
   = signe? "0x" hexdigits
 int 
- =digit19 digits
- /digit
+ = signe? digit19 digits
+ / signe? digit
+ 
 digit19 = [1-9]
+
 digit= [0-9]
+
 digits=digit+
+
 hexdigits = [0-9a-f]+
+
 signe
   = "+"
   / "-"
+  
 frac = "."
