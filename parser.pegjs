@@ -55,16 +55,18 @@
 	return {
         "type": "AssignmentExpression",
 		"operator": "=",
-        left:head,
+        "left":typeReplace(head),
          "right": postIncrementBinary(head, tail)
     }
   }
+  
+  
   
   function postIncrementBinary( head, tail ) {//a++
 	return {
         "type": "BinaryExpression",
 		"operator": "+",
-        left:head,
+        left:typeReplace(head),
         right:tail
     }
   }
@@ -73,7 +75,7 @@
 	return {
         "type": "AssignmentExpression",
 		"operator": "=",
-        left:head,
+        left:typeReplace(head),
          "right": postDecrementBinary(head, tail)
     }
   }
@@ -82,7 +84,7 @@
 	return {
         "type": "BinaryExpression",
 		"operator": "-",
-        left:head,
+        left:typeReplace(head),
         right:tail
     }
   }
@@ -143,6 +145,14 @@
       };
     },head);
   }
+  
+  function typeReplace(head) {
+    return {
+        "type":"Identifier",
+        "name":head["name"]
+    }
+  }
+  
   function param(head, tail) {
     return tail.reduce(function(result, element) {
       return {
