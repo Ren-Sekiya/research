@@ -347,9 +347,10 @@ function = _ model:Model _ name:$word "("_ parameterlist:ParameterList? _")" blo
               }
           / _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" ";"_{
               return {
-              			"type":"FunctionExecution",
+              			"position":location(),
+                        "type":"FunctionExecution",
                         "name":name,
-                        "parameter":parameterlist
+                        "parameter":parameterlist,
                      }
               }
           / _ model:Model _ name:$word "(" parameterlist:ParameterList? ")"";" _{
@@ -536,6 +537,11 @@ returnstmt = _ "return" _ value:from ";"{
                         "value":value
                       }
                 }
+
+ location　= _ !ReservedWord model:(Model)? _ name:$word "(" parameterlist:ParameterList? ")" ";"_{
+                location.start.line
+ }
+
 condition = from
 Expression
   = head:Term tail:(_ [+-] _ Term)* {
